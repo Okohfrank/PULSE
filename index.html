@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Clinical Energy Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/style.css">
+
+</head>
+<body>
+
+<!-- cursor (desktop only) -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ═══ LANGUAGE MODAL ═══ -->
+<div class="modal-overlay" id="langModal">
+  <div class="modal">
+    <div class="modal-title">🌍 Choose Co-Pilot Language</div>
+    <div class="modal-sub">PULSE will respond to you in your chosen language when speaking with the AI.</div>
+    <div class="modal-langs">
+      <div class="modal-lang selected" onclick="selectLang(this,'en')">
+        <span class="modal-lang-flag">🇬🇧</span>
+        <div><div class="modal-lang-name">English</div><div class="modal-lang-native">English</div></div>
+      </div>
+      <div class="modal-lang" onclick="selectLang(this,'yo')">
+        <span class="modal-lang-flag">🇳🇬</span>
+        <div><div class="modal-lang-name">Yoruba</div><div class="modal-lang-native">Èdè Yorùbá</div></div>
+      </div>
+      <div class="modal-lang" onclick="selectLang(this,'ha')">
+        <span class="modal-lang-flag">🇳🇬</span>
+        <div><div class="modal-lang-name">Hausa</div><div class="modal-lang-native">Harshen Hausa</div></div>
+      </div>
+      <div class="modal-lang" onclick="selectLang(this,'ig')">
+        <span class="modal-lang-flag">🇳🇬</span>
+        <div><div class="modal-lang-name">Igbo</div><div class="modal-lang-native">Asụsụ Igbo</div></div>
+      </div>
+    </div>
+    <button class="modal-close" onclick="closeLangModal()">Confirm Language →</button>
+  </div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="17" stroke="#00ff88" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="20s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="20" cy="20" r="10" fill="rgba(0,255,136,0.07)" stroke="#00ff88" stroke-width="1.5"/>
+        <path d="M8 20 L13 20 L16 14 L20 26 L23 18 L26 22 L29 20 L32 20" stroke="#00ff88" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="stroke-dasharray" values="0 100;60 40;0 100" dur="2.5s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="20" cy="20" r="2.5" fill="#00ff88">
+          <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+    <div>
+      <span class="logo-text">PUL<span>SE</span></span>
+      <span class="logo-tagline">Clinical Energy Intelligence</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#screens">Screens</a></li>
+    <li><a href="#nervous-system">Architecture</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#language">Languages</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
+
+  <div class="nav-cta">
+    <div class="lang-selector" onclick="openLangModal()">
+      <span>🌍</span>
+      <span id="navLangLabel">English</span>
+      <span>▾</span>
+    </div>
+    <button class="btn-nav" onclick="window.location.href='../pages/pulse-onboarding.html'">See Demo →</button>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#screens" onclick="toggleMenu()">Screens</a>
+  <a href="#nervous-system" onclick="toggleMenu()">Architecture</a>
+  <a href="#demo" onclick="toggleMenu()">Demo</a>
+  <a href="#language" onclick="toggleMenu()">Languages</a>
+  <a href="#impact" onclick="toggleMenu()">Impact</a>
+  <a href="#" onclick="openLangModal();toggleMenu()">🌍 Choose Language</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+  </div>
+  <div class="hero-ecg">
+    <svg height="60" viewBox="0 0 1200 60">
+      <path d="M0 30 L100 30 L120 30 L135 7 L150 53 L165 3 L180 57 L195 30 L220 30 L320 30 L340 30 L355 7 L370 53 L385 3 L400 57 L415 30 L440 30 L540 30 L560 30 L575 7 L590 53 L605 3 L620 57 L635 30 L660 30 L760 30 L780 30 L795 7 L810 53 L825 3 L840 57 L855 30 L880 30 L980 30 L1000 30 L1015 7 L1030 53 L1045 3 L1060 57 L1075 30 L1100 30 L1200 30" stroke="#00ff88" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    AI-Powered · Zero Hardware · Works Today
+  </div>
+
+  <h1>
+    <span class="line1">Nigeria's Hospitals</span>
+    <span class="line2">Need A Nervous System</span>
+  </h1>
+
+  <p class="hero-sub">PULSE gives every clinic — generator, phone, and nothing else — the AI intelligence to survive power crises, protect vaccines, and save lives. Right now.</p>
+
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="window.location.href='../pages/pulse-onboarding.html'">
+      ▶&nbsp; Watch It Work
+    </button>
+    <button class="btn-secondary" onclick="document.getElementById('screens').scrollIntoView({behavior:'smooth'})">
+      Explore Screens
+    </button>
+  </div>
+
+  <div class="hero-stats reveal">
+    <div class="hero-stat">
+      <div class="stat-num red">87%</div>
+      <div class="stat-label">Nigerians without reliable electricity</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num amber">40%</div>
+      <div class="stat-label">Health centres have zero power</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">9×</div>
+      <div class="stat-label">Grid collapsed in 2024</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num" style="color:var(--teal)">₦0</div>
+      <div class="stat-label">Hardware cost to deploy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCREENS CAROUSEL ═══ -->
+<section id="screens" class="section">
+  <div class="section-label">App Experience</div>
+  <h2 class="section-title reveal">Six Screens.<br>One Nervous System.</h2>
+  <p class="section-sub reveal reveal-delay-1">Every screen is designed for a nurse in a crisis — large, clear, actionable. Here's what the judges will see.</p>
+
+  <div class="screens-wrapper" style="margin-top:52px">
+
+    <!-- SCREEN 1 -->
+    <div class="screen-card reveal">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:#020d08;padding:28px 11px 65px">
+          <div class="phone-status"><span>9:41 AM</span><span>⚡ 94%</span></div>
+          <div style="padding:3px 0 8px;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:800;color:var(--white)">PULSE</div>
+            <div style="font-size:7px;font-family:var(--font-mono);color:var(--g1);animation:pulse 1.5s infinite">● LIVE</div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-card"><div class="gauge-label">Generator</div><div class="gauge-val amber">38%</div><div class="gauge-bar"><div class="gauge-fill amber" style="width:38%"></div></div></div>
+            <div class="gauge-card"><div class="gauge-label">Vaccine Fridge</div><div class="gauge-val green">4.8°C</div><div class="gauge-bar"><div class="gauge-fill green" style="width:90%"></div></div></div>
+          </div>
+          <div class="gauge-row"><div class="gauge-card" style="flex:none;width:100%"><div class="gauge-label">NEPA Status</div><div class="gauge-val red">OFFLINE</div><div style="font-size:7px;color:var(--dim);margin-top:1px;font-family:var(--font-mono)">7h 23m since last supply</div></div></div>
+          <div class="mini-ecg" style="margin:5px 0">
+            <svg width="100%" height="28" viewBox="0 0 240 28">
+              <polyline class="ecg-line" points="0,14 28,14 36,14 44,4 52,24 58,2 66,26 74,14 94,14 120,14 128,14 136,4 144,24 150,2 158,26 166,14 186,14 212,14 220,14 228,4 236,24 240,14" stroke-dasharray="240" stroke-dashoffset="240">
+                <animate attributeName="stroke-dashoffset" from="240" to="-240" dur="2s" repeatCount="indefinite"/>
+              </polyline>
+            </svg>
+          </div>
+          <div class="alert-banner"><div class="a-title">⚠️ PULSE Prediction</div>Generator critical in 4.1 hrs. Fuel re-order by 2:00 PM.</div>
+          <div class="vitals-section">
+            <div class="s-section-header"><span class="s-section-title">Ward Status</span><span class="s-section-more">All</span></div>
+            <div class="vitals-row"><span class="vitals-name">🏥 Delivery Room</span><span class="vitals-val" style="color:var(--g1)">ACTIVE</span></div>
+            <div class="vitals-row"><span class="vitals-name">💉 Pharmacy</span><span class="vitals-val" style="color:var(--g2)">NORMAL</span></div>
+            <div class="vitals-row"><span class="vitals-name">🛏 Ward B</span><span class="vitals-val" style="color:var(--mid)">STANDBY</span></div>
+          </div>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav-item active"><div class="pnav-icon">⚡</div><div class="pnav-label">Home</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🔴</div><div class="pnav-label">Crisis</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🤖</div><div class="pnav-label">AI</div></div>
+          <div class="pnav-item"><div class="pnav-icon">☀️</div><div class="pnav-label">Solar</div></div>
+        </div>
+      </div>
+      <div class="screen-label">Screen 01</div><div class="screen-title">Live Dashboard</div>
+    </div>
+
+    <!-- SCREEN 2 -->
+    <div class="screen-card reveal reveal-delay-1">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:#020d08;padding:28px 11px 65px">
+          <div class="phone-status"><span>9:41 AM</span><span>⚡ 94%</span></div>
+          <div style="font-family:var(--font-display);font-size:12px;font-weight:800;margin-bottom:3px;color:var(--white)">Situation Report</div>
+          <div style="font-size:7px;color:var(--mid);margin-bottom:10px">Tell PULSE what's happening now</div>
+          <div class="crisis-q"><div class="crisis-q-label">What is happening right now?</div>
+            <div class="crisis-options">
+              <div class="c-opt"><span class="c-icon">📋</span>Routine</div>
+              <div class="c-opt selected"><span class="c-icon">🤱</span>Delivery</div>
+              <div class="c-opt"><span class="c-icon">🔬</span>Surgery</div>
+              <div class="c-opt"><span class="c-icon">🚨</span>Emergency</div>
+            </div>
+          </div>
+          <div class="crisis-q"><div class="crisis-q-label">Generator fuel level?</div>
+            <div class="crisis-options">
+              <div class="c-opt"><span class="c-icon">🟢</span>Full</div>
+              <div class="c-opt"><span class="c-icon">🟡</span>Half</div>
+              <div class="c-opt selected"><span class="c-icon">🟠</span>Quarter</div>
+              <div class="c-opt"><span class="c-icon">🔴</span>Critical</div>
+            </div>
+          </div>
+          <div class="crisis-q"><div class="crisis-q-label">NEPA available?</div>
+            <div class="crisis-options">
+              <div class="c-opt"><span class="c-icon">✅</span>Yes</div>
+              <div class="c-opt selected"><span class="c-icon">❌</span>No</div>
+            </div>
+          </div>
+          <button class="submit-btn">Activate PULSE Protocol →</button>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav-item"><div class="pnav-icon">⚡</div><div class="pnav-label">Home</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">🔴</div><div class="pnav-label">Crisis</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🤖</div><div class="pnav-label">AI</div></div>
+          <div class="pnav-item"><div class="pnav-icon">☀️</div><div class="pnav-label">Solar</div></div>
+        </div>
+      </div>
+      <div class="screen-label">Screen 02</div><div class="screen-title">Crisis Input</div>
+    </div>
+
+    <!-- SCREEN 3 -->
+    <div class="screen-card reveal reveal-delay-2">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:#020d08;padding:28px 11px 65px">
+          <div class="phone-status"><span>9:41 AM</span><span>⚡ 94%</span></div>
+          <div class="triage-header">
+            <div class="triage-status">⚠️ PROTOCOL ACTIVE</div>
+            <div class="triage-title">Energy Triage Mode</div>
+            <div style="font-size:7px;color:var(--mid);margin-top:2px">Delivery · Quarter Fuel · NEPA Offline</div>
+          </div>
+          <div class="triage-group">
+            <div class="triage-group-label on">✅ KEEP ON</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Delivery room lighting</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Oxygen concentrator</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Fetal monitor</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Vaccine fridge (4°C locked)</div>
+          </div>
+          <div class="triage-group">
+            <div class="triage-group-label reduce">⚡ REDUCE</div>
+            <div class="triage-item"><div class="triage-dot reduce"></div>Corridor lights</div>
+            <div class="triage-item"><div class="triage-dot reduce"></div>Ceiling fans → low</div>
+          </div>
+          <div class="triage-group">
+            <div class="triage-group-label off">🔴 TURN OFF</div>
+            <div class="triage-item"><div class="triage-dot off"></div>Staff room AC</div>
+            <div class="triage-item"><div class="triage-dot off"></div>Phone chargers</div>
+          </div>
+          <div class="savings-card">
+            <div class="savings-label">Generator Runtime Extended</div>
+            <div class="savings-val">+2.7 hrs</div>
+            <div class="savings-sub">2.1 hrs → 4.8 hrs · Baby delivered safely</div>
+          </div>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav-item"><div class="pnav-icon">⚡</div><div class="pnav-label">Home</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">🔴</div><div class="pnav-label">Crisis</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🤖</div><div class="pnav-label">AI</div></div>
+          <div class="pnav-item"><div class="pnav-icon">☀️</div><div class="pnav-label">Solar</div></div>
+        </div>
+      </div>
+      <div class="screen-label">Screen 03</div><div class="screen-title">Triage Response</div>
+    </div>
+
+    <!-- SCREEN 4 -->
+    <div class="screen-card reveal reveal-delay-3">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:#020d08;padding:28px 11px 65px;display:flex;flex-direction:column">
+          <div class="phone-status"><span>9:41 AM</span><span>⚡ 94%</span></div>
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
+            <div style="width:26px;height:26px;border-radius:50%;background:rgba(0,255,136,0.2);border:1.5px solid var(--g1);display:flex;align-items:center;justify-content:center;font-size:11px">🤖</div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:10px;font-weight:700;color:var(--white)">PULSE Co-Pilot</div>
+              <div style="font-size:6px;color:var(--g1);font-family:var(--font-mono)">● Always on · English</div>
+            </div>
+            <div style="margin-left:auto;font-size:8px;color:var(--dim)">🌍</div>
+          </div>
+          <div class="chat-area" style="flex:1">
+            <div class="chat-msg pulse-ai"><div class="chat-name">PULSE</div><div class="chat-bubble">Good morning. Thursday = low fuel day. Current: 38%. Recommend fuel top-up by noon. 🔋</div></div>
+            <div class="chat-msg user"><div class="chat-bubble">Is it safe to start the steriliser?</div></div>
+            <div class="chat-msg pulse-ai"><div class="chat-name">PULSE</div><div class="chat-bubble">No. Delivery in progress + quarter fuel. Starting steriliser cuts runtime from 4.8hrs → 2.9hrs. Wait until complete. ⚡</div></div>
+            <div class="chat-msg user"><div class="chat-bubble">How long before we need fuel?</div></div>
+            <div class="chat-msg pulse-ai"><div class="chat-name">PULSE</div><div class="chat-bubble">4.8 hrs at optimised load. Call supplier by 6:15 PM. Want me to draft the message? 📱</div></div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" placeholder="Ask PULSE anything..." readonly>
+            <button class="chat-send">→</button>
+          </div>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav-item"><div class="pnav-icon">⚡</div><div class="pnav-label">Home</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🔴</div><div class="pnav-label">Crisis</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">🤖</div><div class="pnav-label">AI</div></div>
+          <div class="pnav-item"><div class="pnav-icon">☀️</div><div class="pnav-label">Solar</div></div>
+        </div>
+      </div>
+      <div class="screen-label">Screen 04</div><div class="screen-title">AI Co-Pilot Chat</div>
+    </div>
+
+    <!-- SCREEN 5 -->
+    <div class="screen-card reveal reveal-delay-4">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:#020d08;padding:28px 11px 65px">
+          <div class="phone-status"><span>9:41 AM</span><span>⚡ 94%</span></div>
+          <div style="font-family:var(--font-display);font-size:11px;font-weight:800;color:var(--teal);margin-bottom:2px">🔮 Digital Twin Simulator</div>
+          <div class="twin-query">"What if NEPA stays off 10 hrs & surgery at 9 PM?"</div>
+          <div class="twin-timeline">
+            <div class="twin-event"><div class="twin-time">7:00 PM</div><div class="twin-desc">Generator 60%. All wards normal.</div></div>
+            <div class="twin-event warn"><div class="twin-time warn">8:30 PM</div><div class="twin-desc">Generator 25% → Triage auto-activates.</div></div>
+            <div class="twin-event"><div class="twin-time">9:00 PM</div><div class="twin-desc">Surgery begins. Optimised runtime: 3.2hrs. ✓ Safe.</div></div>
+            <div class="twin-event danger"><div class="twin-time danger">11:00 PM</div><div class="twin-desc">Surgery complete. Generator 8%. CRITICAL.</div></div>
+          </div>
+          <div class="twin-prob">
+            <div class="twin-prob-label">Failure probability without action</div>
+            <div class="twin-prob-val">67%</div>
+            <div style="font-size:6px;color:var(--mid);margin-top:2px">Order fuel by 3 PM → reduces to 4%</div>
+          </div>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav-item"><div class="pnav-icon">⚡</div><div class="pnav-label">Home</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🔴</div><div class="pnav-label">Crisis</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">🔮</div><div class="pnav-label">Twin</div></div>
+          <div class="pnav-item"><div class="pnav-icon">☀️</div><div class="pnav-label">Solar</div></div>
+        </div>
+      </div>
+      <div class="screen-label">Screen 05</div><div class="screen-title">Digital Twin</div>
+    </div>
+
+    <!-- SCREEN 6 -->
+    <div class="screen-card reveal">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:#020d08;padding:28px 11px 65px">
+          <div class="phone-status"><span>9:41 AM</span><span>⚡ 94%</span></div>
+          <div style="font-family:var(--font-display);font-size:11px;font-weight:800;margin-bottom:2px;color:var(--amber)">☀️ Solar Roadmap</div>
+          <div style="font-size:7px;color:var(--mid);margin-bottom:7px">Your auto-generated business case</div>
+          <div class="solar-summary">
+            <div class="solar-days">312 hrs</div>
+            <div class="solar-days-label">Power failure logged in 30 days</div>
+          </div>
+          <div class="solar-metrics">
+            <div class="s-metric"><div class="s-metric-val red">₦847k</div><div class="s-metric-label">Monthly diesel</div></div>
+            <div class="s-metric"><div class="s-metric-val green">₦2.1M</div><div class="s-metric-label">Solar install</div></div>
+            <div class="s-metric"><div class="s-metric-val" style="color:var(--teal)">14 mo</div><div class="s-metric-label">Payback period</div></div>
+            <div class="s-metric"><div class="s-metric-val green">94%</div><div class="s-metric-label">Generator eliminated</div></div>
+          </div>
+          <button class="solar-cta">📄 Generate Ministry Letter</button>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav-item"><div class="pnav-icon">⚡</div><div class="pnav-label">Home</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🔴</div><div class="pnav-label">Crisis</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🤖</div><div class="pnav-label">AI</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">☀️</div><div class="pnav-label">Solar</div></div>
+        </div>
+      </div>
+      <div class="screen-label">Screen 06</div><div class="screen-title">Solar Roadmap</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ NERVOUS SYSTEM ═══ -->
+<section id="nervous-system" class="section" style="background:var(--bg2)">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title reveal">The Three-Layer<br>Nervous System</h2>
+  <p class="section-sub reveal reveal-delay-1">Your body doesn't wait until your hand is burning to pull it away from fire. PULSE doesn't wait either.</p>
+
+  <div class="ns-layout" style="margin-top:52px">
+    <div class="ns-layers">
+      <div class="ns-layer spinal reveal">
+        <div class="ns-icon-wrap spinal">⚡</div>
+        <div>
+          <div class="ns-name">The Spinal Cord</div>
+          <div style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-bottom:5px">INSTANT REFLEXES · &lt;2 SECONDS</div>
+          <div class="ns-desc">Fires pre-calculated responses the moment a crisis is detected — NEPA cuts, fuel goes critical, fridge warms. No thinking. Sub-second. Like a reflex arc.</div>
+        </div>
+      </div>
+      <div class="ns-layer brain reveal reveal-delay-1">
+        <div class="ns-icon-wrap brain">🧠</div>
+        <div>
+          <div class="ns-name">The Brain</div>
+          <div style="font-size:10px;color:var(--amber);font-family:var(--font-mono);margin-bottom:5px">PATTERN LEARNING · WEEK 2+</div>
+          <div class="ns-desc">Learns your hospital's energy fingerprint. NEPA cuts at 6 PM on weekdays. Fuel runs low on Thursdays. It stops reacting — and starts predicting.</div>
+        </div>
+      </div>
+      <div class="ns-layer twin reveal reveal-delay-2">
+        <div class="ns-icon-wrap twin">🔮</div>
+        <div>
+          <div class="ns-name">The Digital Twin</div>
+          <div style="font-size:10px;color:var(--teal);font-family:var(--font-mono);margin-bottom:5px">SIMULATE THE FUTURE</div>
+          <div class="ns-desc">Run what-if scenarios before they happen. "If NEPA cuts for 10 hours and we have surgery at 9 PM — what breaks?" PULSE answers in seconds.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brain-visual reveal">
+      <div class="brain-ring ring1"></div>
+      <div class="brain-ring ring2"></div>
+      <div class="brain-ring ring3"></div>
+      <div class="brain-node"></div>
+      <div class="brain-node"></div>
+      <div class="brain-node"></div>
+      <div class="brain-node"></div>
+      <div class="brain-node"></div>
+      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 440 440">
+        <line x1="220" y1="220" x2="132" y2="88" stroke="rgba(0,255,136,0.18)" stroke-width="1" stroke-dasharray="4 4"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/></line>
+        <line x1="220" y1="220" x2="352" y2="110" stroke="rgba(0,255,136,0.18)" stroke-width="1" stroke-dasharray="4 4"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="2.5s" begin="0.8s" repeatCount="indefinite"/></line>
+        <line x1="220" y1="220" x2="88" y2="330" stroke="rgba(0,255,136,0.18)" stroke-width="1" stroke-dasharray="4 4"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" begin="1.2s" repeatCount="indefinite"/></line>
+        <line x1="220" y1="220" x2="330" y2="352" stroke="rgba(0,255,136,0.18)" stroke-width="1" stroke-dasharray="4 4"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="3.5s" begin="0.4s" repeatCount="indefinite"/></line>
+        <line x1="220" y1="220" x2="420" y2="220" stroke="rgba(0,255,136,0.18)" stroke-width="1" stroke-dasharray="4 4"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" begin="1.6s" repeatCount="indefinite"/></line>
+      </svg>
+      <div class="brain-core">🫀</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INTERACTIVE DEMO ═══ -->
+<section id="demo" class="section">
+  <div class="section-label">Interactive Demo</div>
+  <h2 class="section-title reveal">Walk Through The Crisis.<br>Feel The Impact.</h2>
+  <p class="section-sub reveal reveal-delay-1">Click each step to see exactly what a nurse sees — and what PULSE does in response.</p>
+
+  <div class="demo-container" style="margin-top:52px">
+    <div class="demo-controls">
+      <div class="demo-step active" onclick="setDemo(0,this)">
+        <div class="demo-step-num">STEP 01 / 05</div>
+        <div class="demo-step-title">⚡ Hospital Dashboard</div>
+        <div class="demo-step-desc">PULSE displays the hospital's live energy vitals — generator fuel, NEPA status, vaccine fridge temperature — at a glance.</div>
+      </div>
+      <div class="demo-step" onclick="setDemo(1,this)">
+        <div class="demo-step-num">STEP 02 / 05</div>
+        <div class="demo-step-title">🚨 Crisis Detected</div>
+        <div class="demo-step-desc">A nurse taps 4 questions. Delivery in progress. Quarter fuel. No NEPA. In 30 seconds, PULSE knows everything it needs.</div>
+      </div>
+      <div class="demo-step" onclick="setDemo(2,this)">
+        <div class="demo-step-num">STEP 03 / 05</div>
+        <div class="demo-step-title">🏥 Triage Response Fires</div>
+        <div class="demo-step-desc">In under 2 seconds, PULSE outputs the clinical energy protocol. Generator runtime jumps from 2.1 to 4.8 hours. The delivery completes safely.</div>
+      </div>
+      <div class="demo-step" onclick="setDemo(3,this)">
+        <div class="demo-step-num">STEP 04 / 05</div>
+        <div class="demo-step-title">🤖 Ask The Co-Pilot</div>
+        <div class="demo-step-desc">Nurses ask in plain English, Yoruba, Hausa, or Igbo. PULSE answers with specific numbers, actionable steps, and drafts fuel request messages automatically.</div>
+      </div>
+      <div class="demo-step" onclick="setDemo(4,this)">
+        <div class="demo-step-num">STEP 05 / 05</div>
+        <div class="demo-step-title">🔮 Simulate The Future</div>
+        <div class="demo-step-desc">The digital twin runs scenarios before they happen. "67% chance of power failure during surgery." Staff act now. The surgery completes safely.</div>
+      </div>
+    </div>
+
+    <div class="demo-phone-wrap">
+      <div class="demo-phone">
+        <!-- Demo Screen 0 -->
+        <div class="demo-screen active" id="ds0" style="background:var(--bg2);height:100%;padding:36px 15px 18px;display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-family:var(--font-display);font-size:15px;font-weight:800;color:var(--white)">PULSE</div>
+            <div style="font-size:8px;font-family:var(--font-mono);color:var(--g1);animation:pulse 1.5s infinite">● LIVE MONITORING</div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-card"><div class="gauge-label">Generator</div><div class="gauge-val amber" id="demoFuel">38%</div><div class="gauge-bar"><div class="gauge-fill amber" id="demoFuelBar" style="width:38%"></div></div></div>
+            <div class="gauge-card"><div class="gauge-label">Fridge Temp</div><div class="gauge-val green">4.8°C</div><div class="gauge-bar"><div class="gauge-fill green" style="width:90%"></div></div></div>
+          </div>
+          <div class="gauge-card"><div class="gauge-label">NEPA Status</div><div class="gauge-val red">OFFLINE — 7h 23m</div></div>
+          <div class="mini-ecg">
+            <svg width="100%" height="28" viewBox="0 0 248 28">
+              <polyline class="ecg-line" points="0,14 28,14 36,14 44,4 52,24 58,2 66,26 74,14 94,14 120,14 128,14 136,4 144,24 150,2 158,26 166,14 186,14 210,14 218,14 226,4 234,24 240,2 248,26" stroke-dasharray="248" stroke-dashoffset="248">
+                <animate attributeName="stroke-dashoffset" from="248" to="-248" dur="2s" repeatCount="indefinite"/>
+              </polyline>
+            </svg>
+          </div>
+          <div class="alert-banner"><div class="a-title">🧠 PULSE AI Prediction</div>Generator critical in 4.1 hrs. Thursday — low fuel day. Activate protocol now.</div>
+          <div class="vitals-row"><span class="vitals-name">🏥 Delivery Room</span><span class="vitals-val" style="color:var(--g1)">ACTIVE</span></div>
+          <div class="vitals-row"><span class="vitals-name">💉 Vaccine Fridge</span><span class="vitals-val" style="color:var(--g1)">SAFE ✓</span></div>
+          <div class="vitals-row"><span class="vitals-name">🛏 Ward B</span><span class="vitals-val" style="color:var(--mid)">STANDBY</span></div>
+        </div>
+        <!-- Demo Screen 1 -->
+        <div class="demo-screen" id="ds1" style="background:var(--bg2);height:100%;padding:36px 15px 18px;overflow-y:auto">
+          <div style="font-family:var(--font-display);font-size:14px;font-weight:800;margin-bottom:3px;color:var(--white)">Crisis Situation</div>
+          <div style="font-size:9px;color:var(--mid);margin-bottom:14px">Answer 4 questions. Takes 30 seconds.</div>
+          <div class="crisis-q"><div class="crisis-q-label">What is happening?</div>
+            <div class="crisis-options">
+              <div class="c-opt"><span class="c-icon">📋</span>Routine</div>
+              <div class="c-opt selected" style="animation:pulse 2s infinite"><span class="c-icon">🤱</span>Delivery</div>
+              <div class="c-opt"><span class="c-icon">🔬</span>Surgery</div>
+              <div class="c-opt"><span class="c-icon">🚨</span>Emergency</div>
+            </div>
+          </div>
+          <div class="crisis-q"><div class="crisis-q-label">Generator fuel?</div>
+            <div class="crisis-options">
+              <div class="c-opt"><span class="c-icon">🟢</span>Full</div>
+              <div class="c-opt"><span class="c-icon">🟡</span>Half</div>
+              <div class="c-opt selected"><span class="c-icon">🟠</span>Quarter</div>
+              <div class="c-opt"><span class="c-icon">🔴</span>Critical</div>
+            </div>
+          </div>
+          <div class="crisis-q"><div class="crisis-q-label">NEPA available?</div>
+            <div class="crisis-options">
+              <div class="c-opt"><span class="c-icon">✅</span>Yes</div>
+              <div class="c-opt selected"><span class="c-icon">❌</span>No</div>
+            </div>
+          </div>
+          <button class="submit-btn" onclick="setDemo(2,document.querySelectorAll('.demo-step')[2])">⚡ Activate PULSE Protocol →</button>
+        </div>
+        <!-- Demo Screen 2 -->
+        <div class="demo-screen" id="ds2" style="background:var(--bg2);height:100%;padding:36px 15px 18px;overflow-y:auto">
+          <div class="triage-header">
+            <div class="triage-status">🔴 PROTOCOL ACTIVE</div>
+            <div class="triage-title" style="font-size:14px">Energy Triage Mode</div>
+            <div style="font-size:8px;color:var(--mid);margin-top:2px">Delivery · Quarter Fuel · NEPA Offline</div>
+          </div>
+          <div class="triage-group"><div class="triage-group-label on">✅ KEEP ON</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Delivery room lighting</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Oxygen concentrator</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Fetal monitor</div>
+            <div class="triage-item"><div class="triage-dot on"></div>Vaccine fridge (4°C locked)</div>
+          </div>
+          <div class="triage-group"><div class="triage-group-label reduce">⚡ REDUCE</div>
+            <div class="triage-item"><div class="triage-dot reduce"></div>Corridor lights → single bulb</div>
+            <div class="triage-item"><div class="triage-dot reduce"></div>Ceiling fans → low</div>
+          </div>
+          <div class="triage-group"><div class="triage-group-label off">🔴 TURN OFF</div>
+            <div class="triage-item"><div class="triage-dot off"></div>Staff room AC</div>
+            <div class="triage-item"><div class="triage-dot off"></div>Admin computers</div>
+            <div class="triage-item"><div class="triage-dot off"></div>Phone chargers</div>
+          </div>
+          <div class="savings-card" style="padding:10px">
+            <div class="savings-label">Runtime Extended</div>
+            <div class="savings-val" style="font-size:26px">+2.7 hrs</div>
+            <div class="savings-sub">2.1 hrs → 4.8 hrs saved</div>
+            <div style="font-size:8px;color:var(--g2);margin-top:3px;font-weight:700">Baby delivered safely ✓</div>
+          </div>
+        </div>
+        <!-- Demo Screen 3 -->
+        <div class="demo-screen" id="ds3" style="background:var(--bg2);height:100%;padding:36px 15px 10px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px">
+            <div style="width:32px;height:32px;border-radius:50%;background:rgba(0,255,136,0.2);border:2px solid var(--g1);display:flex;align-items:center;justify-content:center;font-size:14px">🤖</div>
+            <div><div style="font-family:var(--font-display);font-size:12px;font-weight:700">PULSE Co-Pilot</div><div style="font-size:8px;color:var(--g1)">● English · 24/7 Active</div></div>
+            <div style="margin-left:auto;cursor:pointer;font-size:10px;background:rgba(0,255,136,0.1);border:1px solid var(--border);padding:3px 7px;border-radius:7px;color:var(--g1)" onclick="openLangModal()">🌍 EN</div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto">
+            <div class="chat-msg pulse-ai"><div class="chat-name">PULSE</div><div class="chat-bubble" style="font-size:9px">Good morning. Thursday = low fuel day. Current: 38%. Recommend fuel by noon. 🔋</div></div>
+            <div class="chat-msg user"><div class="chat-bubble" style="font-size:9px">Is it safe to start the steriliser?</div></div>
+            <div class="chat-msg pulse-ai"><div class="chat-name">PULSE</div><div class="chat-bubble" style="font-size:9px">No — delivery in progress + quarter fuel. Starting steriliser cuts runtime 4.8hrs → 2.9hrs. Wait until complete. ⚡</div></div>
+            <div class="chat-msg user"><div class="chat-bubble" style="font-size:9px">Draft fuel request</div></div>
+            <div class="chat-msg pulse-ai"><div class="chat-name">PULSE</div><div class="chat-bubble" style="font-size:9px">✓ Draft: "Please deliver 50L diesel by 6:15 PM today. Urgent — delivery in progress." Send? 📱</div></div>
+          </div>
+          <div class="chat-input-row" style="margin-top:7px">
+            <input type="text" placeholder="Ask in English, Yoruba, Hausa, Igbo..." readonly style="font-size:9px">
+            <button class="chat-send">→</button>
+          </div>
+        </div>
+        <!-- Demo Screen 4 -->
+        <div class="demo-screen" id="ds4" style="background:var(--bg2);height:100%;padding:36px 15px 18px;overflow-y:auto">
+          <div style="font-family:var(--font-display);font-size:12px;font-weight:800;color:var(--teal);margin-bottom:2px">🔮 Digital Twin</div>
+          <div style="font-size:8px;color:var(--mid);margin-bottom:9px">Simulate before it happens</div>
+          <div class="twin-query" style="font-size:9px">"What if NEPA stays off 10 hours & surgery at 9 PM?"</div>
+          <div class="twin-timeline">
+            <div class="twin-event"><div class="twin-time">7:00 PM</div><div class="twin-desc" style="font-size:9px">Generator 60%. All wards normal. Prep begins.</div></div>
+            <div class="twin-event warn"><div class="twin-time warn">8:30 PM</div><div class="twin-desc" style="font-size:9px">Generator 25% → Triage auto-activates.</div></div>
+            <div class="twin-event"><div class="twin-time">9:00 PM</div><div class="twin-desc" style="font-size:9px">Surgery begins. Optimised runtime: 3.2hrs. ✓ Safe.</div></div>
+            <div class="twin-event danger"><div class="twin-time danger">11:00 PM</div><div class="twin-desc" style="font-size:9px">Surgery complete. Generator 8%. CRITICAL.</div></div>
+          </div>
+          <div class="twin-prob" style="padding:10px">
+            <div class="twin-prob-label">Failure probability without action</div>
+            <div class="twin-prob-val" style="font-size:32px">67%</div>
+            <div style="font-size:8px;color:var(--mid);margin-top:2px">Order fuel by 3 PM → reduces to 4%</div>
+            <div style="font-size:8px;color:var(--g1);font-weight:700;margin-top:3px">Cost of action: ₦18,000 · Cost of inaction: A life</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LANGUAGE SECTION ═══ -->
+<section id="language" class="section" style="background:var(--bg2)">
+  <div class="section-label">Multilingual AI</div>
+  <h2 class="section-title reveal">PULSE Speaks<br>Your Language</h2>
+  <p class="section-sub reveal reveal-delay-1">A nurse in Lagos, a midwife in Kano, a clinic admin in Enugu — PULSE speaks to all of them in their own language. No training required.</p>
+
+  <div class="lang-grid">
+    <div class="lang-card active reveal" onclick="setLang(this,'en')">
+      <span class="lang-flag">🇬🇧</span>
+      <div class="lang-name">English</div>
+      <div class="lang-sample">"Generator critical in 4.1 hours. Order fuel by 2 PM."</div>
+      <div class="lang-badge">DEFAULT</div>
+    </div>
+    <div class="lang-card reveal reveal-delay-1" onclick="setLang(this,'yo')">
+      <span class="lang-flag">🇳🇬</span>
+      <div class="lang-name">Yoruba</div>
+      <div class="lang-sample">"Olùmọ ẹrọ yóò parí ní wákàtí 4.1. Pa èepo ọkọ bó."</div>
+      <div class="lang-badge">YORUBA</div>
+    </div>
+    <div class="lang-card reveal reveal-delay-2" onclick="setLang(this,'ha')">
+      <span class="lang-flag">🇳🇬</span>
+      <div class="lang-name">Hausa</div>
+      <div class="lang-sample">"Injin zai ƙare a cikin sa'o'i 4.1. Yi oda mai."</div>
+      <div class="lang-badge">HAUSA</div>
+    </div>
+    <div class="lang-card reveal reveal-delay-3" onclick="setLang(this,'ig')">
+      <span class="lang-flag">🇳🇬</span>
+      <div class="lang-name">Igbo</div>
+      <div class="lang-sample">"Igwe ga-agwụ n'ime awa 4.1. Zụta mmanụ tupu 2 PM."</div>
+      <div class="lang-badge">IGBO</div>
+    </div>
+  </div>
+
+  <!--
+  AI LANGUAGE NOTE FOR DEVELOPERS (commented out as requested)
+  <div style="margin-top:40px;background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:32px;display:flex;gap:20px;align-items:center">
+    <div style="font-size:32px">💬</div>
+    <div>
+      <div>AI Language Note for Developers</div>
+      <div>The language switcher sets a lang parameter passed to the Claude API call. The backend prepends a system prompt telling Claude to respond in the selected language. This is wired up in the next phase — the UI is ready.</div>
+    </div>
+  </div>
+  -->
+</section>
+
+<!-- ═══ IMPACT SECTION — REDESIGNED ═══ -->
+<section id="impact">
+  <div class="impact-header">
+    <div class="section-label">Why It Matters</div>
+    <h2 class="section-title reveal">The Numbers That<br>Define This Crisis</h2>
+    <p class="section-sub reveal reveal-delay-1">This is not a future problem. This is tonight, in thousands of clinics across Nigeria.</p>
+  </div>
+
+  <div class="impact-grid-new">
+    <div class="impact-card-new reveal">
+      <div class="impact-icon-wrap">🏥</div>
+      <div class="impact-content">
+        <div class="impact-big-num green">23,000+</div>
+        <div class="impact-desc">Nigerian Primary Health Centres that can deploy PULSE today — with zero hardware and zero installation cost.</div>
+      </div>
+    </div>
+    <div class="impact-card-new reveal reveal-delay-1">
+      <div class="impact-icon-wrap">❤️</div>
+      <div class="impact-content">
+        <div class="impact-big-num red">1M+</div>
+        <div class="impact-desc">Lives at risk annually from healthcare power failures in Nigeria alone — mothers, newborns, surgical patients.</div>
+      </div>
+    </div>
+    <div class="impact-card-new reveal reveal-delay-2">
+      <div class="impact-icon-wrap">⏱️</div>
+      <div class="impact-content">
+        <div class="impact-big-num teal">+2.7 hrs</div>
+        <div class="impact-desc">Average generator runtime extension per crisis event through PULSE's AI triage — enough to complete a delivery safely.</div>
+      </div>
+    </div>
+    <div class="impact-card-new reveal reveal-delay-3">
+      <div class="impact-icon-wrap">🌍</div>
+      <div class="impact-content">
+        <div class="impact-big-num amber">47</div>
+        <div class="impact-desc">Sub-Saharan African countries facing identical infrastructure challenges. The same solution, expanded across a continent.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHEMXAI BRAND SECTION ═══ -->
+<section class="chemxai-section">
+  <div class="chemxai-bg"></div>
+  <div class="chemxai-stars"></div>
+
+  <div class="chemxai-badge reveal">✦ &nbsp; A Product of ChemXAI</div>
+
+  <h2 class="reveal reveal-delay-1">
+    Built for the Nigeria<br>
+    <em>That Does Exist.</em>
+  </h2>
+
+  <p class="chemxai-tagline reveal reveal-delay-2">
+    Giving Nigeria's clinics the intelligence they deserve — starting with the tools they already have.
+  </p>
+
+  <div class="chemxai-logo-display reveal reveal-delay-3">
+    <div class="chemxai-x">X</div>
+    <div>
+      <div class="chemxai-name">Chem<span>XAI</span></div>
+      <div class="chemxai-desc-small">Intelligent Systems for Africa</div>
+    </div>
+  </div>
+
+  <div class="chemxai-btns reveal reveal-delay-4">
+    <button class="btn-chemxai-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+      ▶&nbsp; View Live Demo
+    </button>
+    <button class="btn-chemxai-secondary" onclick="openLangModal()">
+      🌍&nbsp; Choose Language
+    </button>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <div class="footer-brand-logo-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+              <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="16" cy="16" r="8" fill="rgba(0,255,136,0.07)" stroke="#00ff88" stroke-width="1.2"/>
+            <path d="M6 16 L10 16 L12.5 11 L16 21 L18.5 14 L21 17.5 L23 16 L26 16" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="16" cy="16" r="2" fill="#00ff88"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+          </svg>
+        </div>
+        <div class="footer-brand-logo-text">PUL<span>SE</span></div>
+      </div>
+      <div class="footer-brand-desc">
+        Predictive Utility &amp; Life-Support Energy System. AI-powered clinical energy intelligence for Nigeria's healthcare facilities — no hardware required.
+      </div>
+      <div class="footer-chemxai-badge">
+        <span class="cx-mark">ChemXAI</span>
+        <span style="font-style:italic">A Product of ChemXAI</span>
+      </div>
+    </div>
+
+    <!-- Product column -->
+    <div class="footer-col">
+      <div class="footer-col-title">Product</div>
+      <div class="footer-links">
+        <a href="#screens">App Screens</a>
+        <a href="#nervous-system">Architecture</a>
+        <a href="#demo">Live Demo</a>
+        <a href="#language">Languages</a>
+        <a href="#impact">Impact Data</a>
+      </div>
+    </div>
+
+    <!-- Company column -->
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <div class="footer-links">
+        <a href="#">About ChemXAI</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+
+    <!-- Legal column -->
+    <div class="footer-col">
+      <div class="footer-col-title">Legal</div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Data Security</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copyright">
+      © 2026 ChemXAI. All rights reserved. <em>Made in Nigeria.</em>
+    </div>
+    <div class="footer-social">
+      <a class="footer-social-btn" href="#" title="X / Twitter">𝕏</a>
+      <a class="footer-social-btn" href="#" title="LinkedIn">in</a>
+      <a class="footer-social-btn" href="#" title="Instagram">IG</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

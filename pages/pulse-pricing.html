@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/pulse-pricing.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+        <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+    <div class="nav-logo-name">PUL<span>SE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html#screens">Screens</a></li>
+    <li><a href="pulse-pricing.html" class="active">Pricing</a></li>
+    <li><a href="../index.html#impact">Impact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="nav-btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+    <button class="nav-btn-solid" onclick="window.location.href='pulse-onboarding.html'">Get started free</button>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="../index.html" onclick="toggleMobileMenu()">Home</a>
+  <a href="../index.html#screens" onclick="toggleMobileMenu()">Screens</a>
+  <a href="pulse-pricing.html" onclick="toggleMobileMenu()">Pricing</a>
+  <a href="pulse-login.html" onclick="toggleMobileMenu()">Sign in</a>
+  <a href="pulse-onboarding.html" onclick="toggleMobileMenu()">Get started free</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="pricing-hero">
+  <div class="hero-badge"><div class="hb-dot"></div>Transparent Pricing</div>
+  <h1 class="hero-title">
+    Save lives first.<br>
+    <em>Scale when you're ready.</em>
+  </h1>
+  <p class="hero-sub">
+    Start free on the day you install. Upgrade to Pro when PULSE has proven its value — and it will, usually within your first crisis event.
+  </p>
+
+  <!-- Billing toggle -->
+  <div class="billing-toggle">
+    <span class="bt-label active" id="monthly-label">Monthly</span>
+    <div class="bt-switch" id="billing-switch" onclick="toggleBilling()"></div>
+    <span class="bt-label" id="annual-label">Annual</span>
+    <div class="bt-annual-badge" id="annual-badge">Save 20%</div>
+  </div>
+</section>
+
+<!-- ══ PRICING CARDS ══ -->
+<section class="pricing-section">
+  <div class="pricing-grid">
+
+    <!-- FREE -->
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier free">Free</div>
+        <div class="plan-price-wrap">
+          <span class="plan-currency">&#8358;</span>
+          <span class="plan-price" id="free-price">0</span>
+          <span class="plan-period">/month</span>
+        </div>
+        <div class="plan-annual-note" id="free-annual-note">&nbsp;</div>
+        <div class="plan-desc">Everything you need to survive a power crisis on day one. No credit card, no commitment.</div>
+      </div>
+      <div class="plan-cta">
+        <button class="cta-btn free-btn" onclick="window.location.href='pulse-onboarding.html'">Get started free &rarr;</button>
+      </div>
+      <div class="plan-features">
+        <div class="features-label">What's included</div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Live energy dashboard</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Crisis triage protocol (offline)</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">NEPA status monitoring</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Vaccine fridge temperature alerts</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Appliance registry (up to 10 devices)</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">1 clinic, 1 user account</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-cross">&#8212;</div>
+          <span class="fi-text dim">AI Co-Pilot (10 queries/day limit)</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-cross">&#8212;</div>
+          <span class="fi-text dim">Digital Twin simulator</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-cross">&#8212;</div>
+          <span class="fi-text dim">Solar Roadmap &amp; ministry letters</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-cross">&#8212;</div>
+          <span class="fi-text dim">Smart switch integration</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRO — FEATURED -->
+    <div class="plan-card featured">
+      <div class="plan-badge popular">Most popular</div>
+      <div class="plan-header">
+        <div class="plan-tier pro">Pro</div>
+        <div class="plan-price-wrap">
+          <span class="plan-currency">&#8358;</span>
+          <span class="plan-price" id="pro-price">20,000</span>
+          <span class="plan-period">/month</span>
+        </div>
+        <div class="plan-annual-note" id="pro-annual-note">&nbsp;</div>
+        <div class="plan-desc">The complete PULSE system. AI co-pilot, digital twin, solar roadmap, and smart switch automation — unlimited.</div>
+      </div>
+      <div class="plan-cta">
+        <button class="cta-btn pro-btn" onclick="window.location.href='pulse-onboarding.html?plan=pro'">Start Pro — 14-day free trial &rarr;</button>
+      </div>
+      <div class="plan-features">
+        <div class="features-label">Everything in Free, plus</div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text"><strong>Unlimited</strong> AI Co-Pilot queries</span>
+          <span class="fi-badge new">AI</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text"><strong>Digital Twin</strong> scenario simulator</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text"><strong>Solar Roadmap</strong> &amp; ministry letter generator</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Smart switch integration (Sonoff, Shelly, Tuya)</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Unlimited appliances</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">WhatsApp alert integration</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">30-day power history &amp; export</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Up to 5 staff accounts</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Language support (EN, YO, HA, IG)</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-check">&#10003;</div>
+          <span class="fi-text">Priority email support</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="plan-card">
+      <div class="plan-badge enterprise-badge">For ministries</div>
+      <div class="plan-header">
+        <div class="plan-tier ent">Enterprise</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price" id="ent-price" style="font-size:clamp(24px,3vw,36px);color:var(--purple)">Custom</span>
+        </div>
+        <div class="plan-annual-note" id="ent-annual-note">&nbsp;</div>
+        <div class="plan-desc">For state health ministries, NGOs, and private clinic chains managing 5 or more facilities.</div>
+      </div>
+      <div class="plan-cta">
+        <button class="cta-btn ent-btn" onclick="showToast('Contact us at hello@chemxai.com for Enterprise pricing','info')">Contact us for pricing &rarr;</button>
+      </div>
+      <div class="plan-features">
+        <div class="features-label">Everything in Pro, plus</div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text"><strong>Multi-facility dashboard</strong> (5 to 500+ clinics)</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">Ministry-level aggregate analytics</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">State-wide NEPA outage mapping</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">Bulk solar roadmap generation</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">API access for EMR integration</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">Custom branding &amp; white-label option</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">Dedicated account manager</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">SLA with guaranteed uptime</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">On-site onboarding &amp; staff training</span>
+        </div>
+        <div class="feature-item">
+          <div class="fi-icon fi-purple">&#9670;</div>
+          <span class="fi-text">Annual government reporting export</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SAVINGS CALCULATOR ══ -->
+<section class="calculator-section">
+  <div class="calc-wrap">
+    <div class="calc-head">
+      <div class="calc-head-title">How much will PULSE Pro save your clinic?</div>
+      <div class="calc-head-sub">Adjust your numbers. Watch the savings update in real time.</div>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div>
+          <div class="calc-field-label">Monthly diesel spend <span class="calc-field-val" id="c-diesel-lbl">&#8358;400k</span></div>
+          <input type="range" class="calc-slider" id="c-diesel" min="50000" max="2000000" step="25000" value="400000" oninput="calcSavings()">
+        </div>
+        <div>
+          <div class="calc-field-label">Generator outages per month <span class="calc-field-val" id="c-outages-lbl">12</span></div>
+          <input type="range" class="calc-slider" id="c-outages" min="2" max="40" step="1" value="12" oninput="calcSavings()">
+        </div>
+        <div>
+          <div class="calc-field-label">Avg. hours lost per outage <span class="calc-field-val" id="c-hrs-lbl">8 hrs</span></div>
+          <input type="range" class="calc-slider" id="c-hrs" min="1" max="24" step="1" value="8" oninput="calcSavings()">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="cr-label">Annual saving with PULSE Pro</div>
+        <div class="cr-big" id="cr-big">&#8358;2.64M</div>
+        <div class="cr-per">per year — net of subscription cost</div>
+        <div class="cr-breakdown">
+          <div class="cr-row">
+            <span class="cr-row-label">Fuel saved by triage (est. 30%)</span>
+            <span class="cr-row-val g" id="cr-fuel">+&#8358;1.44M</span>
+          </div>
+          <div class="cr-row">
+            <span class="cr-row-label">Revenue recovered (downtime)</span>
+            <span class="cr-row-val g" id="cr-rev">+&#8358;1.44M</span>
+          </div>
+          <div class="cr-row">
+            <span class="cr-row-label">PULSE Pro subscription cost</span>
+            <span class="cr-row-val r" id="cr-cost">&#8722;&#8358;240k</span>
+          </div>
+        </div>
+        <button class="cr-cta" onclick="window.location.href='pulse-onboarding.html?plan=pro'">Start your 14-day free trial &rarr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMPARISON TABLE ══ -->
+<section class="comparison-section">
+  <div class="section-header">
+    <div class="section-tag">Full feature comparison</div>
+    <h2 class="section-title">Everything side by side</h2>
+    <p class="section-sub">No hidden features. No fine print. Exactly what you get on each plan.</p>
+  </div>
+  <div class="compare-table-wrap">
+    <table class="ct">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free</th>
+          <th class="pro-col">Pro</th>
+          <th class="ent-col">Enterprise</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="category-row"><td colspan="4">Core Monitoring</td></tr>
+        <tr><td class="feature-name">Live energy dashboard</td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Offline triage engine</td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">NEPA status &amp; timer</td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Vaccine fridge monitoring</td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Generator runtime estimate</td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Appliance registry</td><td><span class="ct-text">Up to 10</span></td><td><span class="ct-text" style="color:var(--g1)">Unlimited</span></td><td><span class="ct-text" style="color:var(--g1)">Unlimited</span></td></tr>
+        <tr class="category-row"><td colspan="4">AI Features</td></tr>
+        <tr><td class="feature-name">AI Co-Pilot chat</td><td><span class="ct-text">10 queries/day</span></td><td><span class="ct-text" style="color:var(--g1)">Unlimited</span></td><td><span class="ct-text" style="color:var(--g1)">Unlimited</span></td></tr>
+        <tr><td class="feature-name">4-language support (EN/YO/HA/IG)</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Digital Twin scenario simulator</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Predictive failure alerts</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr class="category-row"><td colspan="4">Planning Tools</td></tr>
+        <tr><td class="feature-name">Solar Roadmap generator</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">Ministry letter generator</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">30-day crisis history &amp; export</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">ROI &amp; cost-benefit calculator</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr class="category-row"><td colspan="4">Hardware &amp; Integrations</td></tr>
+        <tr><td class="feature-name">Smart switch control (Sonoff/Shelly)</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">WhatsApp fuel request alerts</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-check">&#10003;</span></td><td><span class="ct-check">&#10003;</span></td></tr>
+        <tr><td class="feature-name">API access</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-purple">&#9670;</span></td></tr>
+        <tr class="category-row"><td colspan="4">Management &amp; Scale</td></tr>
+        <tr><td class="feature-name">User accounts per clinic</td><td><span class="ct-text">1</span></td><td><span class="ct-text">Up to 5</span></td><td><span class="ct-text" style="color:var(--purple)">Unlimited</span></td></tr>
+        <tr><td class="feature-name">Number of facilities</td><td><span class="ct-text">1</span></td><td><span class="ct-text">1</span></td><td><span class="ct-text" style="color:var(--purple)">5 to 500+</span></td></tr>
+        <tr><td class="feature-name">Multi-facility dashboard</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-purple">&#9670;</span></td></tr>
+        <tr><td class="feature-name">Custom branding / white-label</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-purple">&#9670;</span></td></tr>
+        <tr class="category-row"><td colspan="4">Support</td></tr>
+        <tr><td class="feature-name">Support channel</td><td><span class="ct-text">Community</span></td><td><span class="ct-text" style="color:var(--g1)">Priority email</span></td><td><span class="ct-text" style="color:var(--purple)">Dedicated manager</span></td></tr>
+        <tr><td class="feature-name">Onboarding assistance</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-text">Self-guided</span></td><td><span class="ct-purple">On-site training</span></td></tr>
+        <tr><td class="feature-name">SLA uptime guarantee</td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-cross">&#8212;</span></td><td><span class="ct-purple">&#9670; 99.9%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq-section">
+  <div class="section-header">
+    <div class="section-tag">Questions</div>
+    <h2 class="section-title">Frequently asked</h2>
+  </div>
+  <div class="faq-grid" id="faq-grid">
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">Do I need the internet to use PULSE?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">The core triage engine runs entirely offline — it is embedded in the app and requires zero internet. When you open PULSE on your clinic phone, the Service Worker caches the entire app. Generator runtime calculations, triage protocols, and appliance load shedding all work without signal. The AI Co-Pilot and cloud sync require an internet connection, but the life-saving triage never does.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">Does PULSE require any hardware installation?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">No. PULSE is designed to work with what your clinic already has — a generator, a phone, and nothing else. The app runs on any Android phone. Manual data input (fuel level, NEPA status) is enough to get full triage functionality. Smart switches are an optional Phase 2 upgrade that allow PULSE to automatically cut non-critical loads — but they are not required to start.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">What happens after my 14-day Pro trial ends?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">You are automatically moved to the Free plan. Nothing is deleted. Your clinic profile, appliance registry, and crisis log history are all preserved. You can upgrade back to Pro at any time. We will not charge you without explicit confirmation.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">How does the AI Co-Pilot work in local languages?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">The language selector in the Co-Pilot screen (Pro feature) sends your choice to Claude's system prompt. Claude is then instructed to respond entirely in Yoruba, Hausa, or Igbo — regardless of what language you type your question in. It understands questions in any language and replies in whichever language you selected. The language setting persists across your session.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">Can the government or an NGO pay for our clinic?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">Yes — this is exactly how Enterprise works. A state health ministry, WHO, UNICEF, Gates Foundation, or any NGO can take an Enterprise licence and provide Pro access to hundreds of clinics under a single contract. Individual clinics receive full Pro features without managing their own subscription. Contact us at hello@chemxai.com to discuss bulk licensing.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">Is our clinic's data private and secure?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">All data is stored in Firebase (Google Cloud) with Realtime Database security rules that ensure each clinic can only access their own data. We do not sell, share, or advertise against your clinic's energy data. As the ChemXAI platform owner, we have administrative access to operate and maintain the system, but your patient data never enters PULSE — only energy metrics.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span class="faq-q-text">What payment methods do you accept?</span>
+        <span class="faq-arrow">&#8964;</span>
+      </div>
+      <div class="faq-a">We accept bank transfer, Paystack (cards, USSD, bank transfers), and Flutterwave. For Enterprise clients, we accept purchase orders and invoicing on Net-30 terms. We do not currently accept cash payments.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CTA STRIP ══ -->
+<div class="cta-strip">
+  <div class="cta-strip-tag">Start today</div>
+  <div class="cta-strip-title">A nurse opens this app at 2am.<br>It tells her exactly what to turn off.</div>
+  <div class="cta-strip-sub">That is the product. Start free. No credit card. No installation.</div>
+  <div class="cta-strip-btns">
+    <button class="csb-primary" onclick="window.location.href='pulse-onboarding.html'">Create free account &rarr;</button>
+    <button class="csb-secondary" onclick="window.location.href='pulse-dashboard.html'">View live demo</button>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <div class="fb-logo-mark">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+              <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+            <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+          </svg>
+        </div>
+        <div class="fb-logo-name">PUL<span>SE</span></div>
+      </div>
+      <div class="footer-brand-desc">Predictive Utility &amp; Life-Support Energy System. AI-powered clinical energy intelligence for Nigeria's healthcare facilities.</div>
+      <div class="footer-chemxai">A product of ChemXAI</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-links">
+        <a href="../index.html#screens">App Screens</a>
+        <a href="../index.html#nervous-system">Architecture</a>
+        <a href="pulse-pricing.html">Pricing</a>
+        <a href="../index.html#impact">Impact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-links">
+        <a href="#">About ChemXAI</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Data Security</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 ChemXAI. All rights reserved. <em>Made in Nigeria.</em></div>
+    <div class="footer-social">
+      <a class="fs-btn" href="#" title="X">&#120143;</a>
+      <a class="fs-btn" href="#" title="LinkedIn">in</a>
+      <a class="fs-btn" href="#" title="Instagram">IG</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="../js/pulse-pricing.js"></script>
+</body>
+</html>

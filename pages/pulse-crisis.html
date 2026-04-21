@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>PULSE — Crisis Input</title>
+<link rel="stylesheet" href="../styles/pulse-crisis.css">
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+
+<!-- ACTIVATION OVERLAY -->
+<div class="activation-overlay" id="activation-overlay">
+  <div class="ao-ring" id="ao-ring">!</div>
+  <div class="ao-mode" id="ao-mode">Critical Mode Active</div>
+  <div class="ao-title" id="ao-title">Energy Triage Protocol Activated</div>
+  <div class="ao-runtime-card" id="ao-runtime-card">
+    <div class="ao-runtime-num" id="ao-runtime-num">+2.7h</div>
+    <div class="ao-runtime-label">
+      <strong>Generator runtime extended</strong>
+      AI has optimised your load profile based on current situation
+    </div>
+  </div>
+  <div class="ao-desc" id="ao-desc">PULSE has calculated your clinical energy protocol. The triage response is ready — review which devices to keep on, reduce, and cut.</div>
+  <div class="ao-actions">
+    <button class="ao-btn-primary" onclick="goToTriage()">View Triage Response</button>
+    <button class="ao-btn-secondary" onclick="closeOverlay()">Back to Dashboard</button>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sb-logo-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+            <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-logo-name">PUL<span>SE</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Monitoring</div>
+      <a class="nav-item" href="pulse-dashboard.html">
+        <div class="nav-icon">&#9632;</div>Dashboard
+      </a>
+      <a class="nav-item active" href="#">
+        <div class="nav-icon">&#9888;</div>Crisis Input
+        <span class="nav-badge">!</span>
+      </a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-copilot.html'">
+        <div class="nav-icon">&#9675;</div>AI Co-Pilot
+      </a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-digital-twin.html'">
+        <div class="nav-icon">&#9670;</div>Digital Twin
+      </a>
+      <div class="nav-section-label">Planning</div>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-solar.html'">
+        <div class="nav-icon">&#9728;</div>Solar Roadmap
+      </a>
+      <a class="nav-item" href="#" onclick="showToast('Appliances — coming soon','info')">
+        <div class="nav-icon">&#9741;</div>Appliances
+      </a>
+      <div class="nav-section-label">Account</div>
+      <a class="nav-item" href="login.html">
+        <div class="nav-icon">&#8592;</div>Sign out
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="clinic-pill">
+        <div class="cp-name" id="sb-clinic">Adekunle Memorial Clinic</div>
+        <div class="cp-meta">Alimosho, Lagos &middot; PHC</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="topbar-back" href="pulse-dashboard.html">
+        <span class="topbar-back-arrow">&#8592;</span>
+        <span>Dashboard</span>
+      </a>
+      <div class="topbar-divider"></div>
+      <div class="topbar-title-wrap">
+        <span class="topbar-title">Crisis Input</span>
+        <span class="topbar-sub">Activate energy triage protocol</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-clock" id="live-clock">--:--</div>
+        <div class="topbar-avatar">CA</div>
+      </div>
+    </div>
+
+    <!-- CRISIS ALERT STRIP -->
+    <div class="crisis-strip">
+      <div class="cs-dot"></div>
+      <div class="cs-text">NEPA offline &mdash; Generator at 38% fuel capacity</div>
+      <div class="cs-meta">Last supply: 06:42 &nbsp;&middot;&nbsp; Running 7h 23m</div>
+      <div class="cs-time" id="strip-time">14:35</div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- LEFT: FORM COL -->
+      <div class="form-col">
+
+        <!-- Header -->
+        <div class="form-hdr">
+          <div class="form-hdr-tag"><div class="hdr-tag-dot"></div>Crisis Protocol</div>
+          <div class="form-hdr-title">What is happening right now?</div>
+          <div class="form-hdr-sub">Answer 4 questions. PULSE will calculate your clinical energy protocol in under 2 seconds.</div>
+        </div>
+
+        <!-- Progress pills -->
+        <div class="progress-pills" id="progress-pills">
+          <div class="pp" id="pp1"></div>
+          <div class="pp" id="pp2"></div>
+          <div class="pp" id="pp3"></div>
+          <div class="pp" id="pp4"></div>
+        </div>
+
+        <!-- Q1: Situation -->
+        <div class="q-card" id="q1">
+          <div class="q-header">
+            <div class="q-num" id="qn1">1</div>
+            <div class="q-text-wrap">
+              <span class="q-label">Question 1 of 4</span>
+              <span class="q-title">What clinical situation is currently active?</span>
+            </div>
+            <div class="q-answered-val" id="qv1" style="background:rgba(0,232,122,0.1);color:var(--g1);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700"></div>
+          </div>
+          <div class="q-options cols-2" id="q1-opts">
+            <div class="opt-tile" data-q="1" data-val="Routine" data-color="green" onclick="selectOption(this)">
+              <div class="opt-tile-icon">R</div>
+              <div class="opt-tile-label">Routine</div>
+              <div class="opt-tile-sub">Normal clinic operations</div>
+            </div>
+            <div class="opt-tile" data-q="1" data-val="Delivery in Progress" data-color="amber" onclick="selectOption(this)">
+              <div class="opt-tile-icon">D</div>
+              <div class="opt-tile-label">Delivery in Progress</div>
+              <div class="opt-tile-sub">Labour &amp; maternity active</div>
+            </div>
+            <div class="opt-tile" data-q="1" data-val="Active Surgery" data-color="red" onclick="selectOption(this)">
+              <div class="opt-tile-icon">S</div>
+              <div class="opt-tile-label">Active Surgery</div>
+              <div class="opt-tile-sub">Surgical procedure underway</div>
+            </div>
+            <div class="opt-tile" data-q="1" data-val="Emergency" data-color="red" onclick="selectOption(this)">
+              <div class="opt-tile-icon">!</div>
+              <div class="opt-tile-label">Emergency / Resus</div>
+              <div class="opt-tile-sub">Critical patient intervention</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2: Fuel -->
+        <div class="q-card" id="q2">
+          <div class="q-header">
+            <div class="q-num" id="qn2">2</div>
+            <div class="q-text-wrap">
+              <span class="q-label">Question 2 of 4</span>
+              <span class="q-title">How much generator fuel is remaining?</span>
+            </div>
+            <div class="q-answered-val" id="qv2" style="background:rgba(240,165,0,0.1);color:var(--amber);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700"></div>
+          </div>
+          <div class="fuel-bar-q" id="q2-fuel">
+            <div class="fuel-pct-display" id="fuel-display">Select below</div>
+            <div class="fuel-pct-label" id="fuel-label">Tap a fuel level</div>
+            <div style="margin:14px 0 10px">
+              <div class="fuel-track" id="fuel-track" onclick="handleFuelTrackClick(event)">
+                <div class="fuel-fill" id="fuel-fill" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="fuel-labels">
+              <button class="fuel-label-btn" data-level="full"     data-pct="95"  onclick="setFuel(this)">Full<br><small>90–100%</small></button>
+              <button class="fuel-label-btn" data-level="half"     data-pct="55"  onclick="setFuel(this)">Half<br><small>40–60%</small></button>
+              <button class="fuel-label-btn" data-level="quarter"  data-pct="28"  onclick="setFuel(this)">Quarter<br><small>20–35%</small></button>
+              <button class="fuel-label-btn" data-level="critical" data-pct="10"  onclick="setFuel(this)">Critical<br><small>&lt;20%</small></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3: NEPA -->
+        <div class="q-card" id="q3">
+          <div class="q-header">
+            <div class="q-num" id="qn3">3</div>
+            <div class="q-text-wrap">
+              <span class="q-label">Question 3 of 4</span>
+              <span class="q-title">Is NEPA grid supply currently available?</span>
+            </div>
+            <div class="q-answered-val" id="qv3" style="background:rgba(232,65,90,0.1);color:var(--red);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700"></div>
+          </div>
+          <div class="q-options cols-2" id="q3-opts">
+            <div class="opt-tile" data-q="3" data-val="Yes — NEPA Available" data-color="green" onclick="selectOption(this)">
+              <div class="opt-tile-icon">Y</div>
+              <div class="opt-tile-label">Yes — NEPA Available</div>
+              <div class="opt-tile-sub">Grid power is currently on</div>
+            </div>
+            <div class="opt-tile" data-q="3" data-val="No — NEPA Offline" data-color="red" onclick="selectOption(this)">
+              <div class="opt-tile-icon">X</div>
+              <div class="opt-tile-label">No — NEPA Offline</div>
+              <div class="opt-tile-sub">Running on generator only</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4: Active Wards -->
+        <div class="q-card" id="q4">
+          <div class="q-header">
+            <div class="q-num" id="qn4">4</div>
+            <div class="q-text-wrap">
+              <span class="q-label">Question 4 of 4</span>
+              <span class="q-title">Which wards are currently occupied or in use?</span>
+            </div>
+            <div class="q-answered-val" id="qv4" style="background:rgba(77,143,255,0.1);color:var(--blue);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700"></div>
+          </div>
+          <div class="q-options" style="padding:16px 20px 20px">
+            <div class="ward-grid" id="ward-grid">
+              <div class="ward-tile" data-ward="Delivery Room" onclick="toggleWard(this)">
+                <div class="wt-icon">D</div><div class="wt-name">Delivery Room</div>
+              </div>
+              <div class="ward-tile" data-ward="Operating Theatre" onclick="toggleWard(this)">
+                <div class="wt-icon">S</div><div class="wt-name">Theatre</div>
+              </div>
+              <div class="ward-tile" data-ward="Maternity Ward" onclick="toggleWard(this)">
+                <div class="wt-icon">M</div><div class="wt-name">Maternity</div>
+              </div>
+              <div class="ward-tile" data-ward="Paediatric Ward" onclick="toggleWard(this)">
+                <div class="wt-icon">P</div><div class="wt-name">Paediatric</div>
+              </div>
+              <div class="ward-tile" data-ward="ICU" onclick="toggleWard(this)">
+                <div class="wt-icon">I</div><div class="wt-name">ICU</div>
+              </div>
+              <div class="ward-tile" data-ward="General Ward" onclick="toggleWard(this)">
+                <div class="wt-icon">G</div><div class="wt-name">General Ward</div>
+              </div>
+              <div class="ward-tile" data-ward="Pharmacy" onclick="toggleWard(this)">
+                <div class="wt-icon">Ph</div><div class="wt-name">Pharmacy</div>
+              </div>
+              <div class="ward-tile" data-ward="Laboratory" onclick="toggleWard(this)">
+                <div class="wt-icon">L</div><div class="wt-name">Lab</div>
+              </div>
+              <div class="ward-tile" data-ward="Admin" onclick="toggleWard(this)">
+                <div class="wt-icon">A</div><div class="wt-name">Admin</div>
+              </div>
+            </div>
+            <div style="margin-top:10px;font-size:11px;color:var(--dim);text-align:center" id="ward-count-label">Select all active wards (tap to toggle)</div>
+          </div>
+        </div>
+
+        <!-- ACTIVATE -->
+        <div class="activate-section">
+          <button class="activate-btn" id="activate-btn" disabled onclick="activateProtocol()">
+            <span class="activate-btn-icon" id="act-icon">&#9654;</span>
+            <span id="act-label">Activate PULSE Protocol</span>
+          </button>
+          <div class="activate-hint" id="activate-hint">
+            Answer all 4 questions to <span>activate the triage protocol</span>
+          </div>
+        </div>
+
+      </div><!-- /form-col -->
+
+
+      <!-- RIGHT: PREVIEW COL -->
+      <div class="preview-col">
+        <div class="preview-panel">
+
+          <div class="preview-header">
+            <div class="ph-dot" id="preview-dot"></div>
+            <div>
+              <div class="ph-title">Situation Preview</div>
+              <div class="ph-sub" id="preview-sub">Awaiting input...</div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="prev-section-label">Your Answers</div>
+            <div class="prev-row" id="pr-situation">
+              <span class="prev-label">Situation</span>
+              <span class="prev-val" id="pv-situation">Not answered</span>
+            </div>
+            <div class="prev-row" id="pr-fuel">
+              <span class="prev-label">Fuel Level</span>
+              <span class="prev-val" id="pv-fuel">Not answered</span>
+            </div>
+            <div class="prev-row" id="pr-nepa">
+              <span class="prev-label">NEPA Status</span>
+              <span class="prev-val" id="pv-nepa">Not answered</span>
+            </div>
+            <div class="prev-row" id="pr-wards">
+              <span class="prev-label">Active Wards</span>
+              <span class="prev-val" id="pv-wards">None selected</span>
+            </div>
+          </div>
+
+          <!-- Projected triage preview — shows when enough answers given -->
+          <div class="triage-preview" id="triage-preview">
+            <div class="tp-title">Projected Triage</div>
+            <div id="tp-items"></div>
+          </div>
+
+          <!-- Runtime estimate -->
+          <div class="runtime-preview" id="runtime-preview">
+            <div class="rp-main" id="rp-num">—</div>
+            <div class="rp-label">Estimated generator runtime</div>
+            <div class="rp-sub" id="rp-sub">Fill in all questions to calculate</div>
+          </div>
+
+          <!-- severity indicator -->
+          <div id="severity-block" style="display:none">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Protocol Severity</div>
+            <div style="width:100%;height:8px;background:var(--muted);border-radius:4px;overflow:hidden">
+              <div id="severity-bar" style="height:100%;border-radius:4px;transition:width 0.5s var(--ease);width:0%"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--dim);margin-top:4px">
+              <span>Routine</span><span>Critical</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<script type="module" src="../js/pulse-crisis.js"></script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>PULSE — AI Co-Pilot</title>
+<link rel="stylesheet" href="../styles/pulse-copilot.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sb-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+            <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-name">PUL<span>SE</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-sl">Monitoring</div>
+      <a class="nav-item" href="pulse-dashboard.html"><div class="nav-icon">&#9632;</div>Dashboard</a>
+      <a class="nav-item" href="pulse-crisis.html"><div class="nav-icon">&#9888;</div>Crisis Input</a>
+      <a class="nav-item active" href="#"><div class="nav-icon">&#9675;</div>AI Co-Pilot</a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-digital-twin.html'"><div class="nav-icon">&#9670;</div>Digital Twin</a>
+      <div class="nav-sl">Planning</div>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-solar.html'"><div class="nav-icon">&#9728;</div>Solar Roadmap</a>
+      <a class="nav-item" href="#" onclick="showToast('Appliances coming soon','info')"><div class="nav-icon">&#9741;</div>Appliances</a>
+      <div class="nav-sl">Account</div>
+      <a class="nav-item" href="login.html"><div class="nav-icon">&#8592;</div>Sign out</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="clinic-pill">
+        <div class="cp-name">Adekunle Memorial Clinic</div>
+        <div class="cp-meta">Alimosho, Lagos &middot; PHC</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+      <a class="topbar-back" href="pulse-dashboard.html">&#8592;</a>
+      <div class="tb-div"></div>
+
+      <!-- AI Identity -->
+      <div class="ai-identity">
+        <div class="ai-avatar">
+          P
+          <div class="ai-avatar-dot"></div>
+        </div>
+        <div class="ai-name-wrap">
+          <span class="ai-name">PULSE Co-Pilot</span>
+          <div class="ai-status"><div class="ai-status-dot"></div><span id="ai-status-text">Ready — always on</span></div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Language selector -->
+        <div class="lang-wrapper">
+          <div class="lang-btn" id="lang-btn" onclick="toggleLangDropdown()">
+            <span class="lang-flag" id="lang-flag">&#127468;&#127463;</span>
+            <span class="lang-code" id="lang-code">EN</span>
+            <span class="lang-chevron">&#8964;</span>
+          </div>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <div class="lang-dropdown-title">Co-Pilot Language</div>
+            <div class="lang-option active" data-code="en" data-flag="&#127468;&#127463;" onclick="selectLang(this)">
+              <span class="lo-flag">&#127468;&#127463;</span>
+              <div><div class="lo-name">English</div><div class="lo-native">English</div></div>
+              <span class="lo-check">&#10003;</span>
+            </div>
+            <div class="lang-option" data-code="yo" data-flag="&#127475;&#127468;" onclick="selectLang(this)">
+              <span class="lo-flag">&#127475;&#127468;</span>
+              <div><div class="lo-name">Yoruba</div><div class="lo-native">&#200;d&#232; Yor&#249;b&#225;</div></div>
+              <span class="lo-check">&#10003;</span>
+            </div>
+            <div class="lang-option" data-code="ha" data-flag="&#127475;&#127468;" onclick="selectLang(this)">
+              <span class="lo-flag">&#127475;&#127468;</span>
+              <div><div class="lo-name">Hausa</div><div class="lo-native">Harshen Hausa</div></div>
+              <span class="lo-check">&#10003;</span>
+            </div>
+            <div class="lang-option" data-code="ig" data-flag="&#127475;&#127468;" onclick="selectLang(this)">
+              <span class="lo-flag">&#127475;&#127468;</span>
+              <div><div class="lo-name">Igbo</div><div class="lo-native">As&#7909;s&#7909; Igbo</div></div>
+              <span class="lo-check">&#10003;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Context panel toggle -->
+        <div class="ctx-btn active" id="ctx-toggle" onclick="toggleContextPanel()">
+          <span>&#9776;</span><span> Context</span>
+        </div>
+
+        <div class="topbar-clock" id="live-clock">--:--</div>
+        <div class="topbar-avatar">CA</div>
+      </div>
+    </div>
+
+    <!-- CHAT LAYOUT -->
+    <div class="chat-layout">
+
+      <!-- CONTEXT PANEL -->
+      <div class="context-panel" id="context-panel">
+        <div class="ctx-panel-inner">
+
+          <div>
+            <div class="ctx-section-title">Live Context</div>
+            <div class="ctx-card">
+              <div class="ctx-row"><span class="ctx-label">Generator</span><span class="ctx-val amber" id="ctx-gen">38% (76L)</span></div>
+              <div class="ctx-row"><span class="ctx-label">NEPA</span><span class="ctx-val red" id="ctx-nepa">Offline 7h 23m</span></div>
+              <div class="ctx-row"><span class="ctx-label">Fridge Temp</span><span class="ctx-val green" id="ctx-fridge">4.8&#176;C</span></div>
+              <div class="ctx-row"><span class="ctx-label">Current Load</span><span class="ctx-val white" id="ctx-load">2,840W</span></div>
+              <div class="ctx-row"><span class="ctx-label">Active Protocol</span><span class="ctx-val amber" id="ctx-protocol">Delivery Mode</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="ctx-section-title">Clinic Profile</div>
+            <div class="ctx-card">
+              <div class="ctx-row"><span class="ctx-label">Facility</span><span class="ctx-val white">Adekunle Memorial</span></div>
+              <div class="ctx-row"><span class="ctx-label">Generator</span><span class="ctx-val white">20 kVA</span></div>
+              <div class="ctx-row"><span class="ctx-label">Tank Size</span><span class="ctx-val white">200L</span></div>
+              <div class="ctx-row"><span class="ctx-label">Appliances</span><span class="ctx-val white">12 registered</span></div>
+              <div class="ctx-row"><span class="ctx-label">Smart Switches</span><span class="ctx-val green">2 active</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="suggested-title">Suggested Questions</div>
+            <div class="suggested-list" id="suggested-list">
+              <button class="sug-btn" onclick="sendSuggested(this)">Is it safe to start the steriliser now?</button>
+              <button class="sug-btn" onclick="sendSuggested(this)">How long before we need to order fuel?</button>
+              <button class="sug-btn" onclick="sendSuggested(this)">Draft a fuel request message for our supplier</button>
+              <button class="sug-btn" onclick="sendSuggested(this)">What appliances can we safely cut right now?</button>
+              <button class="sug-btn" onclick="sendSuggested(this)">What is the vaccine fridge safe temperature range?</button>
+              <button class="sug-btn" onclick="sendSuggested(this)">When was our last power failure this week?</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CHAT MAIN -->
+      <div class="chat-main">
+        <div class="messages-area" id="messages-area">
+
+          <!-- Empty state (hidden once chat starts) -->
+          <div class="empty-state" id="empty-state">
+            <div class="es-glow">P</div>
+            <div class="es-title">Good evening, Dr. Chukwuemeka</div>
+            <div class="es-sub">
+              I am your PULSE Co-Pilot — always on, always watching your clinic's energy systems. Ask me anything about your generator, vaccine fridge, power load, or request a fuel order draft.
+            </div>
+            <div class="quickstart-pills">
+              <div class="qs-pill" onclick="sendSuggested(this)">Is it safe to run the steriliser?</div>
+              <div class="qs-pill" onclick="sendSuggested(this)">How long until we need fuel?</div>
+              <div class="qs-pill" onclick="sendSuggested(this)">Draft a fuel request message</div>
+              <div class="qs-pill" onclick="sendSuggested(this)">Vaccine fridge temperature safe?</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- INPUT AREA -->
+        <div class="input-area">
+
+          <!-- Active context strip -->
+          <div class="context-strip" id="context-strip">
+            <div class="ctx-tag amber"><div class="ctx-tag-dot"></div>Generator 38%</div>
+            <div class="ctx-tag red"><div class="ctx-tag-dot"></div>NEPA Offline</div>
+            <div class="ctx-tag"><div class="ctx-tag-dot"></div>Delivery Protocol Active</div>
+            <div class="ctx-tag"><div class="ctx-tag-dot"></div><span id="ctx-lang-tag">English</span></div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-wrap">
+              <textarea
+                class="chat-input"
+                id="chat-input"
+                placeholder="Ask PULSE anything about your clinic's energy..."
+                rows="1"
+                onkeydown="handleKeydown(event)"
+                oninput="handleInputChange()"
+              ></textarea>
+              <button class="voice-btn" id="voice-btn" onclick="toggleVoice()" title="Voice input">
+                &#9670;
+              </button>
+            </div>
+            <button class="send-btn" id="send-btn" onclick="sendMessage()" disabled>
+              &#9654;
+            </button>
+          </div>
+
+          <div class="input-footer">
+            <div class="input-hint">Press <kbd>Enter</kbd> to send &nbsp;&middot;&nbsp; <kbd>Shift+Enter</kbd> for new line</div>
+            <div class="char-count" id="char-count">0 / 500</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="module" src="../js/pulse-copilot.js"></script>
+</body>
+</html>

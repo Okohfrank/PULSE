@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Create Your Clinic Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/pulse-onboarding.css">
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-dot"></div>
+  <span id="toast-msg"></span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+        <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+    <div class="nav-logo-name">PUL<span>SE</span></div>
+  </a>
+  <div class="nav-right">
+    <span>Already registered?</span>
+    <button class="nav-login-btn" onclick="window.location.href='login.html'">Sign in</button>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page-shell">
+<div class="page-center">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-tag"><div class="tag-dot"></div>Create Account</div>
+    <h1 class="page-title">Set up your<br><span>clinic profile</span></h1>
+    <p class="page-sub">Register your facility in under 5 minutes. PULSE will configure your energy intelligence baseline before your first session.</p>
+  </div>
+
+  <!-- ════════════════ SIGNUP SECTION ════════════════ -->
+  <div id="signup-section">
+
+    <!-- Stepper -->
+    <div class="stepper" id="main-stepper">
+      <div class="step-item active" id="ms1"><div class="step-circle">1</div><div class="step-label">Account</div></div>
+      <div class="step-item" id="ms2"><div class="step-circle">2</div><div class="step-label">Facility</div></div>
+      <div class="step-item" id="ms3"><div class="step-circle">3</div><div class="step-label">Power</div></div>
+      <div class="step-item" id="ms4"><div class="step-circle">4</div><div class="step-label">Confirm</div></div>
+    </div>
+
+    <!-- ── STEP 1: Account ── -->
+    <div class="form-card step-panel active" id="step-1">
+      <div class="form-card-header">
+        <div class="fch-label">Step 1 of 4</div>
+        <div class="form-card-title">Account credentials</div>
+        <div class="form-card-sub">The primary administrator for this clinic account. Staff can be added later.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="form-row c2">
+          <div class="form-group">
+            <label class="field-label">First name <span class="req">*</span></label>
+            <input type="text" id="fn" placeholder="Chukwuemeka" autocomplete="given-name">
+            <div class="field-err" id="fn-err">Please enter your first name</div>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Last name <span class="req">*</span></label>
+            <input type="text" id="ln" placeholder="Adeyemi" autocomplete="family-name">
+            <div class="field-err" id="ln-err">Please enter your last name</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Work email address <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="admin@clinicname.com" autocomplete="email">
+            <div class="field-err" id="email-err">Enter a valid email address</div>
+          </div>
+        </div>
+        <div class="form-row c2">
+          <div class="form-group">
+            <label class="field-label">Password <span class="req">*</span></label>
+            <div class="pw-wrap">
+              <input type="password" id="pw" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkPwStrength()">
+              <button type="button" class="pw-toggle" onclick="togglePw('pw','pt1')"><span id="pt1">show</span></button>
+            </div>
+            <div class="pw-str" id="pw-str" style="display:none">
+              <div class="pw-str-bar">
+                <div class="pw-seg" id="ps1"></div><div class="pw-seg" id="ps2"></div>
+                <div class="pw-seg" id="ps3"></div><div class="pw-seg" id="ps4"></div>
+              </div>
+              <div class="pw-str-lbl" id="ps-lbl"></div>
+            </div>
+            <div class="field-err" id="pw-err">Minimum 8 characters required</div>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Confirm password <span class="req">*</span></label>
+            <div class="pw-wrap">
+              <input type="password" id="cpw" placeholder="Repeat password" autocomplete="new-password">
+              <button type="button" class="pw-toggle" onclick="togglePw('cpw','pt2')"><span id="pt2">show</span></button>
+            </div>
+            <div class="field-err" id="cpw-err">Passwords do not match</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Your role <span class="req">*</span></label>
+            <div class="sel-wrap">
+              <select id="role">
+                <option value="" disabled selected>Select your role</option>
+                <option>Medical Director</option>
+                <option>Hospital Administrator</option>
+                <option>Head of Nursing</option>
+                <option>Facilities Manager</option>
+                <option>IT / Technical Lead</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field-err" id="role-err">Please select your role</div>
+          </div>
+        </div>
+        <div class="fdiv"></div>
+        <div class="check-item" id="tos-check" onclick="toggleCheck('tos-check')">
+          <div class="check-box">&#10003;</div>
+          <div class="check-text">
+            <span class="check-lbl">I agree to the Terms of Service and Privacy Policy</span>
+            <span class="check-desc">Your data is encrypted and stored securely. We never share or sell facility data.</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="goStep(2)">Continue — Facility Details</button>
+        </div>
+        <div class="form-footer">
+          Already have an account? <a href="login.html">Sign in here</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: Facility ── -->
+    <div class="form-card step-panel" id="step-2">
+      <div class="form-card-header">
+        <div class="fch-label">Step 2 of 4</div>
+        <div class="form-card-title">Facility information</div>
+        <div class="form-card-sub">Used to configure location-specific grid data and NEPA supply patterns for your area.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Clinic / Hospital name <span class="req">*</span></label>
+            <input type="text" id="clinic-name" placeholder="e.g. Adekunle Memorial Clinic">
+            <div class="field-err" id="cn-err">Please enter the clinic name</div>
+          </div>
+        </div>
+        <div class="form-row c2">
+          <div class="form-group">
+            <label class="field-label">State <span class="req">*</span></label>
+            <div class="sel-wrap">
+              <select id="state" onchange="populateLGA()">
+                <option value="" disabled selected>Select state</option>
+                <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option><option>Anambra</option>
+                <option>Bauchi</option><option>Bayelsa</option><option>Benue</option><option>Borno</option>
+                <option>Cross River</option><option>Delta</option><option>Ebonyi</option><option>Edo</option>
+                <option>Ekiti</option><option>Enugu</option><option>FCT</option><option>Gombe</option>
+                <option>Imo</option><option>Jigawa</option><option>Kaduna</option><option>Kano</option>
+                <option>Katsina</option><option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+                <option>Lagos</option><option>Nasarawa</option><option>Niger</option><option>Ogun</option>
+                <option>Ondo</option><option>Osun</option><option>Oyo</option><option>Plateau</option>
+                <option>Rivers</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+                <option>Zamfara</option>
+              </select>
+            </div>
+            <div class="field-err" id="state-err">Please select your state</div>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Local Government Area <span class="req">*</span></label>
+            <div class="sel-wrap">
+              <select id="lga"><option value="" disabled selected>Select state first</option></select>
+            </div>
+            <div class="field-err" id="lga-err">Please select an LGA</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Street address</label>
+            <input type="text" id="address" placeholder="Street address (optional)">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Facility type <span class="req">*</span></label>
+            <div class="radio-group" id="ftype-group">
+              <label class="radio-pill" onclick="selectRadio(this,'ftype-group')"><input type="radio" name="ftype" value="PHC"><div class="r-dot"></div>Primary Health Centre</label>
+              <label class="radio-pill" onclick="selectRadio(this,'ftype-group')"><input type="radio" name="ftype" value="General"><div class="r-dot"></div>General Hospital</label>
+              <label class="radio-pill" onclick="selectRadio(this,'ftype-group')"><input type="radio" name="ftype" value="Private"><div class="r-dot"></div>Private Clinic</label>
+              <label class="radio-pill" onclick="selectRadio(this,'ftype-group')"><input type="radio" name="ftype" value="Specialist"><div class="r-dot"></div>Specialist Hospital</label>
+              <label class="radio-pill" onclick="selectRadio(this,'ftype-group')"><input type="radio" name="ftype" value="Maternity"><div class="r-dot"></div>Maternity Home</label>
+            </div>
+            <div class="field-err" id="ftype-err">Please select a facility type</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Number of wards / departments <span class="req">*</span></label>
+            <div class="ward-counter">
+              <button type="button" class="ward-btn" onclick="adjustWard(-1)">&#8722;</button>
+              <div class="ward-display" id="ward-count">4</div>
+              <button type="button" class="ward-btn" onclick="adjustWard(1)">&#43;</button>
+            </div>
+            <div class="field-hint">Each ward will be mapped separately in your energy profile.</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="goStep(3)">Continue — Power Setup</button>
+          <button class="btn-secondary" onclick="goStep(1)">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: Power Infrastructure ── -->
+    <div class="form-card step-panel" id="step-3">
+      <div class="form-card-header">
+        <div class="fch-label">Step 3 of 4</div>
+        <div class="form-card-title">Power infrastructure</div>
+        <div class="form-card-sub">This is how PULSE calculates your baseline energy capacity and generator runtime projections.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="form-row c2">
+          <div class="form-group">
+            <label class="field-label">Generator capacity <span class="req">*</span></label>
+            <input type="number" id="gen-kva" placeholder="e.g. 20" min="1" max="5000">
+            <div class="field-hint">Enter rated capacity in kVA</div>
+            <div class="field-err" id="gkva-err">Please enter generator capacity</div>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Fuel tank size (litres) <span class="req">*</span></label>
+            <input type="number" id="tank-size" placeholder="e.g. 200" min="1">
+            <div class="field-hint">Total tank capacity when full</div>
+            <div class="field-err" id="tank-err">Please enter tank size</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Fuel type <span class="req">*</span></label>
+            <div class="radio-group" id="fuel-group">
+              <label class="radio-pill" onclick="selectRadio(this,'fuel-group')"><input type="radio" name="fuel" value="Diesel"><div class="r-dot"></div>Diesel (AGO)</label>
+              <label class="radio-pill" onclick="selectRadio(this,'fuel-group')"><input type="radio" name="fuel" value="Petrol"><div class="r-dot"></div>Petrol (PMS)</label>
+              <label class="radio-pill" onclick="selectRadio(this,'fuel-group')"><input type="radio" name="fuel" value="LPG"><div class="r-dot"></div>LPG / Gas</label>
+            </div>
+            <div class="field-err" id="fuel-err">Please select fuel type</div>
+          </div>
+        </div>
+        <div class="form-row c2">
+          <div class="form-group">
+            <label class="field-label">Number of generators</label>
+            <div class="sel-wrap">
+              <select id="gen-count">
+                <option value="1" selected>1 generator</option>
+                <option value="2">2 generators</option>
+                <option value="3">3 generators</option>
+                <option value="4+">4 or more</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Solar panels installed?</label>
+            <div class="radio-group" id="solar-group">
+              <label class="radio-pill" onclick="selectRadio(this,'solar-group')"><input type="radio" name="solar" value="Yes"><div class="r-dot"></div>Yes</label>
+              <label class="radio-pill" onclick="selectRadio(this,'solar-group')"><input type="radio" name="solar" value="No"><div class="r-dot"></div>Not yet</label>
+              <label class="radio-pill" onclick="selectRadio(this,'solar-group')"><input type="radio" name="solar" value="Planned"><div class="r-dot"></div>Planned</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">NEPA supply reliability in your area</label>
+            <div class="radio-group" id="nepa-group">
+              <label class="radio-pill" onclick="selectRadio(this,'nepa-group')"><input type="radio" name="nepa" value="Never"><div class="r-dot"></div>Never available</label>
+              <label class="radio-pill" onclick="selectRadio(this,'nepa-group')"><input type="radio" name="nepa" value="Rare"><div class="r-dot"></div>Rarely (0–2 hrs/day)</label>
+              <label class="radio-pill" onclick="selectRadio(this,'nepa-group')"><input type="radio" name="nepa" value="Occasional"><div class="r-dot"></div>Occasional (2–6 hrs/day)</label>
+              <label class="radio-pill" onclick="selectRadio(this,'nepa-group')"><input type="radio" name="nepa" value="Moderate"><div class="r-dot"></div>Moderate (6–12 hrs/day)</label>
+            </div>
+            <div class="field-hint">This helps PULSE calibrate its prediction models for your location.</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="field-label">Smart switches installed?</label>
+            <div class="radio-group" id="switch-group">
+              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="Yes"><div class="r-dot"></div>Yes — already installed</label>
+              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="No"><div class="r-dot"></div>No — manual control only</label>
+              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="Planned"><div class="r-dot"></div>Planning to install</label>
+            </div>
+            <div class="field-hint">Smart switches allow PULSE to automatically cut non-critical loads during a crisis.</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="goStep(4)">Continue — Review &amp; Confirm</button>
+          <button class="btn-secondary" onclick="goStep(2)">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: Review ── -->
+    <div class="form-card step-panel" id="step-4">
+      <div class="form-card-header">
+        <div class="fch-label">Step 4 of 4</div>
+        <div class="form-card-title">Review &amp; confirm</div>
+        <div class="form-card-sub">Check your details before creating your account. You can edit everything later in Settings.</div>
+      </div>
+      <div class="form-card-body">
+        <div id="review-content" style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px;"></div>
+        <div class="fdiv"></div>
+        <div class="check-item" id="confirm-check" onclick="toggleCheck('confirm-check')">
+          <div class="check-box">&#10003;</div>
+          <div class="check-text">
+            <span class="check-lbl">I confirm the above details are correct</span>
+            <span class="check-desc">PULSE will use this data to build your clinic's energy baseline profile.</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" id="create-btn" onclick="createAccount()">Create Account &amp; Continue</button>
+          <button class="btn-secondary" onclick="goStep(3)">Back</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /signup-section -->
+
+
+  <!-- ════════════════ SECTION BREAK ════════════════ -->
+  <div class="section-break" id="section-break">
+    <div class="sb-line"></div>
+    <div class="sb-badge">
+      <div class="sb-icon">A</div>
+      Step 2 of 2 — Appliance Registration
+    </div>
+    <h2>Register your appliances</h2>
+    <p>Tell PULSE every device in your clinic. The AI will analyse each one, calculate its power draw, assign a priority level, and build your complete energy baseline — all automatically.</p>
+  </div>
+
+
+  <!-- ════════════════ APPLIANCE SECTION ════════════════ -->
+  <div id="appliance-section">
+
+    <!-- Appliance sub-stepper -->
+    <div class="app-stepper">
+      <div class="app-step active" id="as1">
+        <div class="app-step-node">
+          <div class="app-step-circle">1</div>
+          <div class="app-step-name">Add Appliances</div>
+        </div>
+      </div>
+      <div class="app-step-line"></div>
+      <div class="app-step" id="as2">
+        <div class="app-step-node">
+          <div class="app-step-circle">2</div>
+          <div class="app-step-name">AI Analysis</div>
+        </div>
+      </div>
+      <div class="app-step-line"></div>
+      <div class="app-step" id="as3">
+        <div class="app-step-node">
+          <div class="app-step-circle">3</div>
+          <div class="app-step-name">Review Profile</div>
+        </div>
+      </div>
+      <div class="app-step-line"></div>
+      <div class="app-step" id="as4">
+        <div class="app-step-node">
+          <div class="app-step-circle">4</div>
+          <div class="app-step-name">Complete</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── APP STEP 1: Add Appliances ── -->
+    <div class="form-card app-panel active" id="ap-1">
+      <div class="form-card-header">
+        <div class="fch-label">Appliance Registration</div>
+        <div class="form-card-title">Add your clinic's equipment</div>
+        <div class="form-card-sub">Add each appliance, piece of medical equipment, or electrical device. Include model numbers where possible — PULSE will look up the exact power specifications.</div>
+      </div>
+      <div class="form-card-body">
+
+        <!-- Inline add form -->
+        <div class="inline-form" id="inline-form">
+          <div class="inline-form-title">Add new appliance</div>
+          <div class="form-row c2">
+            <div class="form-group">
+              <label class="field-label">Appliance / Device name <span class="req">*</span></label>
+              <input type="text" id="a-name" placeholder="e.g. Oxygen Concentrator">
+              <div class="field-err" id="aname-err">Please enter a name</div>
+            </div>
+            <div class="form-group">
+              <label class="field-label">Model number (optional)</label>
+              <input type="text" id="a-model" placeholder="e.g. Philips EverFlo 5L">
+              <div class="field-hint">If provided, PULSE will look up exact wattage automatically.</div>
+            </div>
+          </div>
+          <div class="form-row c2">
+            <div class="form-group">
+              <label class="field-label">Wattage (W) — if known</label>
+              <input type="number" id="a-watts" placeholder="e.g. 300" min="1">
+              <div class="field-hint">Leave blank if you have the model number above.</div>
+            </div>
+            <div class="form-group">
+              <label class="field-label">Ward / Location <span class="req">*</span></label>
+              <div class="sel-wrap">
+                <select id="a-ward">
+                  <option value="" disabled selected>Select ward</option>
+                  <option>Delivery Room</option>
+                  <option>Operating Theatre</option>
+                  <option>Maternity Ward</option>
+                  <option>Paediatric Ward</option>
+                  <option>General Ward</option>
+                  <option>ICU</option>
+                  <option>Pharmacy</option>
+                  <option>Laboratory</option>
+                  <option>Reception / Admin</option>
+                  <option>Staff Room</option>
+                  <option>Storage / Cold Room</option>
+                  <option>Corridor / Shared</option>
+                </select>
+              </div>
+              <div class="field-err" id="award-err">Please select a ward</div>
+            </div>
+          </div>
+          <div class="form-row c2">
+            <div class="form-group">
+              <label class="field-label">Priority level <span class="req">*</span></label>
+              <div class="radio-group" id="apriority-group">
+                <label class="radio-pill" onclick="selectRadio(this,'apriority-group')"><input type="radio" name="apriority" value="Life-Critical"><div class="r-dot"></div>Life-Critical</label>
+                <label class="radio-pill" onclick="selectRadio(this,'apriority-group')"><input type="radio" name="apriority" value="Important"><div class="r-dot"></div>Important</label>
+                <label class="radio-pill" onclick="selectRadio(this,'apriority-group')"><input type="radio" name="apriority" value="Standard"><div class="r-dot"></div>Standard</label>
+              </div>
+              <div class="field-err" id="aprio-err">Please select a priority</div>
+            </div>
+            <div class="form-group">
+              <label class="field-label">On a smart switch?</label>
+              <div class="radio-group" id="aswitch-group">
+                <label class="radio-pill" onclick="selectRadio(this,'aswitch-group')"><input type="radio" name="aswitch" value="Yes"><div class="r-dot"></div>Yes</label>
+                <label class="radio-pill" onclick="selectRadio(this,'aswitch-group')"><input type="radio" name="aswitch" value="No"><div class="r-dot"></div>No</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="field-label">Quantity</label>
+              <input type="number" id="a-qty" value="1" min="1" max="100">
+            </div>
+          </div>
+          <div class="inline-btn-row">
+            <button class="btn-sm-primary" onclick="addAppliance()">Add Appliance</button>
+            <button type="button" class="btn-sm-cancel" onclick="closeInlineForm()">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Appliance list -->
+        <div class="app-list" id="app-list">
+          <!-- Pre-seeded example items -->
+          <div class="app-item" data-id="1">
+            <div class="app-item-icon">VC</div>
+            <div class="app-item-info">
+              <div class="app-item-name">Vaccine Refrigerator</div>
+              <div class="app-item-meta">Haier HBC-40 · Pharmacy · x1</div>
+              <div class="app-item-badges">
+                <span class="badge b-crit">Life-Critical</span>
+                <span class="badge b-smart">Smart Switch</span>
+              </div>
+            </div>
+            <div class="app-item-actions">
+              <button class="btn-icon del" onclick="removeAppliance(1)" title="Remove">&#215;</button>
+            </div>
+          </div>
+          <div class="app-item" data-id="2">
+            <div class="app-item-icon">OC</div>
+            <div class="app-item-info">
+              <div class="app-item-name">Oxygen Concentrator</div>
+              <div class="app-item-meta">Philips EverFlo 5L · Delivery Room · x2</div>
+              <div class="app-item-badges">
+                <span class="badge b-crit">Life-Critical</span>
+              </div>
+            </div>
+            <div class="app-item-actions">
+              <button class="btn-icon del" onclick="removeAppliance(2)" title="Remove">&#215;</button>
+            </div>
+          </div>
+          <div class="app-item" data-id="3">
+            <div class="app-item-icon">AC</div>
+            <div class="app-item-info">
+              <div class="app-item-name">Air Conditioning Unit</div>
+              <div class="app-item-meta">1.5 HP Split Unit · Staff Room · x1</div>
+              <div class="app-item-badges">
+                <span class="badge b-std">Standard</span>
+                <span class="badge b-smart">Smart Switch</span>
+              </div>
+            </div>
+            <div class="app-item-actions">
+              <button class="btn-icon del" onclick="removeAppliance(3)" title="Remove">&#215;</button>
+            </div>
+          </div>
+          <div class="app-item" data-id="4">
+            <div class="app-item-icon">FM</div>
+            <div class="app-item-info">
+              <div class="app-item-name">Fetal Heart Monitor</div>
+              <div class="app-item-meta">Edan F6 · Delivery Room · x1</div>
+              <div class="app-item-badges">
+                <span class="badge b-crit">Life-Critical</span>
+              </div>
+            </div>
+            <div class="app-item-actions">
+              <button class="btn-icon del" onclick="removeAppliance(4)" title="Remove">&#215;</button>
+            </div>
+          </div>
+          <div class="app-item" data-id="5">
+            <div class="app-item-icon">SL</div>
+            <div class="app-item-info">
+              <div class="app-item-name">Surgical Theatre Lights</div>
+              <div class="app-item-meta">LED Shadowless · Operating Theatre · x3</div>
+              <div class="app-item-badges">
+                <span class="badge b-crit">Life-Critical</span>
+              </div>
+            </div>
+            <div class="app-item-actions">
+              <button class="btn-icon del" onclick="removeAppliance(5)" title="Remove">&#215;</button>
+            </div>
+          </div>
+          <div class="app-item" data-id="6">
+            <div class="app-item-icon">WL</div>
+            <div class="app-item-info">
+              <div class="app-item-name">Ward Lighting (Fluorescent)</div>
+              <div class="app-item-meta">40W tubes · General Ward · x12</div>
+              <div class="app-item-badges">
+                <span class="badge b-imp">Important</span>
+              </div>
+            </div>
+            <div class="app-item-actions">
+              <button class="btn-icon del" onclick="removeAppliance(6)" title="Remove">&#215;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add btn -->
+        <button class="add-btn" id="add-btn" onclick="openInlineForm()">
+          + Add Another Appliance
+        </button>
+
+        <div style="margin-top:6px;font-size:10px;color:var(--mid);text-align:center;">
+          <span id="appliance-count">6 appliances registered</span>
+        </div>
+
+        <div class="btn-row" style="margin-top:20px">
+          <button class="btn-primary" onclick="runAIAnalysis()">Analyse with PULSE AI</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── APP STEP 2: AI Analysis ── -->
+    <div class="form-card app-panel" id="ap-2">
+      <div class="form-card-header">
+        <div class="fch-label">AI Analysis in Progress</div>
+        <div class="form-card-title">PULSE is building your energy profile</div>
+        <div class="form-card-sub">The AI is calculating power draw for each appliance, assigning load categories, and computing your clinic's total energy baseline.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="ai-panel visible" id="ai-panel">
+          <div class="ai-hdr">
+            <div class="ai-mark"><div class="ai-mark-dot"></div></div>
+            <div>
+              <div class="ai-title">PULSE AI — Energy Profile Analysis</div>
+              <div class="ai-sub">Processing appliance specifications</div>
+            </div>
+          </div>
+          <div class="ai-loading" id="ai-loading">
+            <div class="ai-dots">
+              <div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>
+            </div>
+            <span id="ai-loading-text">Identifying appliance specifications...</span>
+          </div>
+          <div class="ai-results" id="ai-results" style="display:none"></div>
+          <div class="ai-summary" id="ai-summary" style="display:none">
+            <div class="ais-item">
+              <div class="ais-val green" id="ais-total">—</div>
+              <div class="ais-lbl">Total Load (W)</div>
+            </div>
+            <div class="ais-item">
+              <div class="ais-val blue" id="ais-critical">—</div>
+              <div class="ais-lbl">Critical Load (W)</div>
+            </div>
+            <div class="ais-item">
+              <div class="ais-val amber" id="ais-runtime">—</div>
+              <div class="ais-lbl">Est. Runtime (hrs)</div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row" id="ai-next-btn" style="display:none;margin-top:24px">
+          <button class="btn-primary" onclick="goAppStep(3)">Review Energy Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── APP STEP 3: Review Profile ── -->
+    <div class="form-card app-panel" id="ap-3">
+      <div class="form-card-header">
+        <div class="fch-label">Energy Profile Review</div>
+        <div class="form-card-title">Your clinic's baseline energy profile</div>
+        <div class="form-card-sub">Review the profile PULSE has built. You can adjust priorities or wattage at any time from your Settings page.</div>
+      </div>
+      <div class="form-card-body">
+        <div id="profile-review" style="display:flex;flex-direction:column;gap:9px;margin-bottom:24px;"></div>
+        <div class="ai-summary" style="display:grid;margin:0 0 24px">
+          <div class="ais-item">
+            <div class="ais-val green" id="profile-total">2,840W</div>
+            <div class="ais-lbl">Full Load</div>
+          </div>
+          <div class="ais-item">
+            <div class="ais-val blue" id="profile-critical">1,140W</div>
+            <div class="ais-lbl">Critical Load</div>
+          </div>
+          <div class="ais-item">
+            <div class="ais-val amber" id="profile-runtime">4.8 hrs</div>
+            <div class="ais-lbl">Est. Runtime</div>
+          </div>
+        </div>
+        <div style="background:rgba(0,232,122,0.04);border:1px solid var(--border2);border-radius:var(--r2);padding:16px 18px;font-size:11px;color:var(--mid);line-height:1.7;margin-bottom:24px;">
+          Based on your generator capacity and this appliance profile, PULSE estimates your clinic can run critical equipment for approximately <strong style="color:var(--g1)">4.8 hours</strong> on a full tank in emergency mode. Adding smart switches will allow PULSE to act automatically when fuel drops below threshold.
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="finishSetup()">Complete Setup — Go to Dashboard</button>
+          <button class="btn-secondary" onclick="goAppStep(1)">Edit Appliances</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── APP STEP 4: Complete ── -->
+    <div class="form-card app-panel" id="ap-4">
+      <div class="form-card-body">
+        <div class="success-screen visible">
+          <div class="success-ring">P</div>
+          <div class="success-title">Your clinic is ready</div>
+          <div class="success-sub">
+            PULSE has built your energy baseline profile.<br>
+            Your dashboard is now configured and ready to monitor your clinic.
+          </div>
+          <button class="btn-primary" style="max-width:280px;margin:0 auto" onclick="window.location.href='pulse-dashboard.html'">
+            Go to Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /appliance-section -->
+
+</div><!-- /page-center -->
+</div><!-- /page-shell -->
+
+<script type="module" src="../js/pulse-onboarding.js"></script>
+</body>
+</html>

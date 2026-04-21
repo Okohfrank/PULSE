@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>PULSE — Triage Response</title>
+<link rel="stylesheet" href="../styles/pulse-triage.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sb-logo-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+            <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-logo-name">PUL<span>SE</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-sl">Monitoring</div>
+      <a class="nav-item" href="pulse_dashboard.html"><div class="nav-icon">&#9632;</div>Dashboard</a>
+      <a class="nav-item active" href="#"><div class="nav-icon">&#9888;</div>Crisis Input<span class="nav-badge">!</span></a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-copilot.html'"><div class="nav-icon">&#9675;</div>AI Co-Pilot</a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-digital-twin.html'"><div class="nav-icon">&#9670;</div>Digital Twin</a>
+      <div class="nav-sl">Planning</div>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-solar.html'"><div class="nav-icon">&#9728;</div>Solar Roadmap</a>
+      <a class="nav-item" href="#" onclick="showToast('Appliances coming soon','info')"><div class="nav-icon">&#9741;</div>Appliances</a>
+      <div class="nav-sl">Account</div>
+      <a class="nav-item" href="pulse_login.html"><div class="nav-icon">&#8592;</div>Sign out</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="clinic-pill">
+        <div class="cp-name">Adekunle Memorial Clinic</div>
+        <div class="cp-meta">Alimosho, Lagos &middot; PHC</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+      <a class="topbar-back" href="pulse_crisis.html">
+        <span>&#8592;</span><span>Crisis Input</span>
+      </a>
+      <div class="topbar-divider"></div>
+      <div class="topbar-title-wrap">
+        <span class="topbar-title">Triage Response</span>
+        <span class="topbar-sub" id="topbar-sub">Protocol active</span>
+      </div>
+      <div class="topbar-right">
+        <div class="offline-badge"><div class="ob-dot"></div>Offline Ready</div>
+        <div class="topbar-clock" id="live-clock">--:--</div>
+        <div class="topbar-avatar">CA</div>
+      </div>
+    </div>
+
+    <!-- PROTOCOL BAND -->
+    <div class="protocol-band sev-warning" id="protocol-band">
+      <div class="pb-icon" id="pb-icon">!</div>
+      <div class="pb-body">
+        <div class="pb-mode" id="pb-mode">WARNING PROTOCOL ACTIVE</div>
+        <div class="pb-title" id="pb-title">Delivery in Progress — Energy Triage Mode</div>
+        <div class="pb-meta" id="pb-meta">Activated at <span id="pb-time">14:35</span> &nbsp;&#183;&nbsp; Fuel: 38% &nbsp;&#183;&nbsp; NEPA: Offline &nbsp;&#183;&nbsp; 2 wards active</div>
+      </div>
+      <div class="pb-right">
+        <div class="pb-stat">
+          <div class="pb-stat-num" id="pb-runtime" style="color:var(--g1)">4.8h</div>
+          <div class="pb-stat-label">Optimised Runtime</div>
+        </div>
+        <div class="pb-stat">
+          <div class="pb-stat-num" id="pb-saved" style="color:var(--teal)">+2.7h</div>
+          <div class="pb-stat-label">Hours Saved</div>
+        </div>
+        <div class="pb-stat">
+          <div class="pb-stat-num" id="pb-critical-load" style="color:var(--amber)">1,140W</div>
+          <div class="pb-stat-label">Critical Load</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- LEFT: TRIAGE COL -->
+      <div class="triage-col">
+
+        <!-- Runtime Hero -->
+        <div class="runtime-hero">
+          <div class="rh-left">
+            <div class="rh-label">Generator Runtime — Before vs. After PULSE Triage</div>
+            <div class="rh-nums">
+              <div class="rh-before">
+                <div class="rh-before-num" id="rh-before">2.1h</div>
+                <div class="rh-before-label">Without triage</div>
+              </div>
+              <div class="rh-arrow">&#8594;</div>
+              <div class="rh-after">
+                <div class="rh-after-num" id="rh-after">4.8h</div>
+                <div class="rh-after-label">With PULSE triage</div>
+              </div>
+            </div>
+            <div class="rh-saved-pill" id="rh-saved-pill">&#43; 2.7 hours saved — enough to complete the delivery safely</div>
+          </div>
+          <div class="rh-right">
+            <div class="rh-bar-wrap">
+              <div class="rh-bar-label"><span>Before</span><span id="rh-b-pct">44%</span></div>
+              <div class="rh-bar"><div class="rh-bar-fill before" id="rh-bar-before" style="width:44%"></div></div>
+              <div class="rh-bar-label"><span>After</span><span id="rh-a-pct">100%</span></div>
+              <div class="rh-bar"><div class="rh-bar-fill after" id="rh-bar-after" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION: KEEP ON -->
+        <div class="triage-section" id="sec-on">
+          <div class="ts-header" onclick="toggleSection('on')">
+            <div class="ts-dot on"></div>
+            <div class="ts-title">Keep On <span class="ts-subtitle">— Life-Critical</span></div>
+            <div class="ts-count on" id="count-on">4 devices</div>
+            <div class="ts-chevron">&#8964;</div>
+          </div>
+          <div class="ts-body" id="body-on">
+            <!-- devices injected by JS -->
+          </div>
+          <div class="ts-footer">
+            <div class="tsf-total">Combined load: <strong id="total-on">—</strong></div>
+            <div style="font-size:10px;color:var(--g3)">These devices must not be cut under any circumstances</div>
+          </div>
+        </div>
+
+        <!-- SECTION: REDUCE -->
+        <div class="triage-section" id="sec-reduce">
+          <div class="ts-header" onclick="toggleSection('reduce')">
+            <div class="ts-dot reduce"></div>
+            <div class="ts-title">Reduce <span class="ts-subtitle">— Lower consumption</span></div>
+            <div class="ts-count reduce" id="count-reduce">2 devices</div>
+            <div class="ts-chevron">&#8964;</div>
+          </div>
+          <div class="ts-body" id="body-reduce">
+          </div>
+          <div class="ts-footer">
+            <div class="tsf-total">Reducible load: <strong id="total-reduce">—</strong></div>
+            <div style="font-size:10px;color:rgba(240,165,0,0.7)">Switch to low-power mode or single bulb</div>
+          </div>
+        </div>
+
+        <!-- SECTION: TURN OFF -->
+        <div class="triage-section" id="sec-off">
+          <div class="ts-header" onclick="toggleSection('off')">
+            <div class="ts-dot off"></div>
+            <div class="ts-title">Turn Off <span class="ts-subtitle">— Safe to cut</span></div>
+            <div class="ts-count off" id="count-off">4 devices</div>
+            <div class="ts-chevron">&#8964;</div>
+          </div>
+          <div class="ts-body" id="body-off">
+          </div>
+          <div class="ts-footer">
+            <div class="tsf-total">Load eliminated: <strong id="total-off">—</strong></div>
+            <div style="font-size:10px;color:rgba(232,65,90,0.7)">Cutting these extends runtime without affecting patient care</div>
+          </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="triage-actions">
+          <button class="btn-primary" onclick="confirmProtocol()">Confirm &amp; Log Protocol</button>
+          <button class="btn-secondary" onclick="window.location.href='pulse-crisis.html'">Edit Inputs</button>
+          <button class="btn-danger" onclick="showToast('Sending emergency fuel request...','error')">Emergency Fuel Request</button>
+        </div>
+
+      </div><!-- /triage-col -->
+
+      <!-- RIGHT: SIDE COL -->
+      <div class="side-col">
+        <div class="side-panel">
+
+          <!-- Situation Summary -->
+          <div class="summary-card">
+            <div class="sc-title">Situation Summary</div>
+            <div class="sc-row"><span class="sc-label">Clinical Status</span><span class="sc-val amber" id="ss-situation">Delivery in Progress</span></div>
+            <div class="sc-row"><span class="sc-label">Fuel Level</span><span class="sc-val amber" id="ss-fuel">38% (76L)</span></div>
+            <div class="sc-row"><span class="sc-label">NEPA</span><span class="sc-val red" id="ss-nepa">Offline — 7h 23m</span></div>
+            <div class="sc-row"><span class="sc-label">Active Wards</span><span class="sc-val white" id="ss-wards">Delivery, Maternity</span></div>
+            <div class="sc-row"><span class="sc-label">Smart Switches</span><span class="sc-val green" id="ss-switches">2 connected</span></div>
+          </div>
+
+          <!-- Fuel Countdown -->
+          <div class="fuel-countdown">
+            <div class="fc-title">Generator Countdown</div>
+            <div class="fc-timer amber" id="fc-timer">4:48:00</div>
+            <div class="fc-label">at optimised load</div>
+            <div class="fc-bar"><div class="fc-bar-fill" id="fc-bar-fill" style="width:38%"></div></div>
+            <div class="fc-checkpoints">
+              <span>Now</span><span id="cp-warn">+2.4h</span><span id="cp-crit">+3.6h</span><span>Empty</span>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="quick-actions">
+            <div class="qa-title">Quick Actions</div>
+            <button class="qa-btn primary" onclick="showToast('Opening AI Co-Pilot...','info')">
+              <div class="qa-icon">A</div>Ask AI Co-Pilot
+            </button>
+            <button class="qa-btn" onclick="showToast('Digital Twin simulator...','info')">
+              <div class="qa-icon">S</div>Run Simulation
+            </button>
+            <button class="qa-btn danger" onclick="showToast('Drafting fuel request...','error')">
+              <div class="qa-icon">F</div>Request Fuel
+            </button>
+          </div>
+
+          <!-- Offline Note -->
+          <div class="offline-note">
+            <strong>Works without internet</strong>
+            This triage response runs entirely from embedded clinical rules — no server connection required. Results are instant even on zero signal.
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<script type="module" src="../js/pulse-triage.js"></script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>PULSE — Solar Roadmap</title>
+<link rel="stylesheet" href="../styles/pulse-solar.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+<div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+            <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-name">PUL<span>SE</span></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-sl">Monitoring</div>
+      <a class="ni" href="pulse-dashboard.html"><div class="ni-icon">&#9632;</div>Dashboard</a>
+      <a class="ni" href="pulse-crisis.html"><div class="ni-icon">&#9888;</div>Crisis Input</a>
+      <a class="ni" href="pulse-copilot.html"><div class="ni-icon">&#9675;</div>AI Co-Pilot</a>
+      <a class="ni" href="pulse-digital-twin.html"><div class="ni-icon">&#9670;</div>Digital Twin</a>
+      <div class="nav-sl">Planning</div>
+      <a class="ni active" href="#"><div class="ni-icon">&#9728;</div>Solar Roadmap</a>
+      <a class="ni" href="#" onclick="showToast('Appliances coming soon','info')"><div class="ni-icon">&#9741;</div>Appliances</a>
+      <div class="nav-sl">Account</div>
+      <a class="ni" href="login.html"><div class="ni-icon">&#8592;</div>Sign out</a>
+    </nav>
+    <div class="sb-foot">
+      <div class="clinic-pill">
+        <div class="cp-name">Adekunle Memorial Clinic</div>
+        <div class="cp-meta">Alimosho, Lagos &middot; PHC</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+      <a class="tb-back" href="pulse-dashboard.html">&#8592;<span> Dashboard</span></a>
+      <div class="tb-div"></div>
+      <div class="tb-title-wrap">
+        <span class="tb-title">Solar Roadmap</span>
+        <span class="tb-sub">Your path to energy independence</span>
+      </div>
+      <div class="tb-right">
+        <div class="tb-clock" id="live-clock">--:--</div>
+        <div class="tb-avatar">CA</div>
+      </div>
+    </div>
+
+    <!-- SOLAR HERO BAND -->
+    <div class="solar-hero">
+      <div class="sh-sun">&#9728;</div>
+      <div class="sh-body">
+        <div class="sh-label">Solar Independence Plan &mdash; Adekunle Memorial Clinic</div>
+        <div class="sh-title">Your clinic spent <span id="hero-cost" style="color:var(--red)">&#8358;847,000</span> on diesel last month</div>
+        <div class="sh-sub">A solar installation pays for itself in <strong style="color:var(--sun)" id="hero-payback">14 months</strong>. This page builds your business case and generates your ministry submission letter.</div>
+      </div>
+      <div class="sh-stats">
+        <div class="sh-stat">
+          <div class="sh-stat-num" id="hero-hours">312</div>
+          <div class="sh-stat-label">Outage hours<br>this month</div>
+        </div>
+        <div class="sh-stat">
+          <div class="sh-stat-num" id="hero-savings" style="color:var(--g1)">94%</div>
+          <div class="sh-stat-label">Generator<br>dependence cut</div>
+        </div>
+        <div class="sh-stat">
+          <div class="sh-stat-num" id="hero-co2" style="color:var(--teal)">4.2T</div>
+          <div class="sh-stat-label">CO₂ saved<br>per year</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- LEFT COL -->
+      <div class="left-col">
+
+        <!-- 30-Day Power Summary -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:rgba(232,65,90,0.1);border:1px solid rgba(232,65,90,0.15);color:var(--red)">30</div>
+            <div>
+              <div class="sc-title">30-Day Power Crisis Summary</div>
+              <div class="sc-sub">Logged outages, generator usage, and vaccine fridge events this month</div>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="summary-grid">
+              <div class="sum-card">
+                <div class="sum-num red" id="s-outages">23</div>
+                <div class="sum-label">NEPA outages<br>recorded</div>
+              </div>
+              <div class="sum-card">
+                <div class="sum-num amber" id="s-hours">312</div>
+                <div class="sum-label">Total hours<br>without NEPA</div>
+              </div>
+              <div class="sum-card">
+                <div class="sum-num red" id="s-cost">&#8358;847k</div>
+                <div class="sum-label">Diesel spend<br>this month</div>
+              </div>
+              <div class="sum-card">
+                <div class="sum-num green" id="s-saved">+62h</div>
+                <div class="sum-label">Runtime saved<br>by PULSE triage</div>
+              </div>
+            </div>
+
+            <div class="heatmap-title">Daily outage pattern (last 30 days — red = crisis event)</div>
+            <div class="heatmap-grid" id="heatmap"></div>
+            <div class="heatmap-legend">
+              <div class="hm-leg-dot hm-none"></div><span>No outage</span>
+              <div class="hm-leg-dot hm-low" style="margin-left:8px"></div><span>1–3 hrs</span>
+              <div class="hm-leg-dot hm-mid" style="margin-left:8px"></div><span>3–8 hrs</span>
+              <div class="hm-leg-dot hm-high" style="margin-left:8px"></div><span>8–16 hrs</span>
+              <div class="hm-leg-dot hm-crisis" style="margin-left:8px"></div><span>Crisis event</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cost-Benefit Analysis -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:var(--sun-dim);border:1px solid rgba(251,191,36,0.2);color:var(--sun)">&#8358;</div>
+            <div>
+              <div class="sc-title">Cost-Benefit Analysis</div>
+              <div class="sc-sub">Current diesel costs vs. solar investment — your 5-year picture</div>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="cost-layout">
+              <div class="cost-side">
+                <div class="cost-side-title red">Current Costs (Annual)</div>
+                <div class="cost-item"><span class="ci-label">Diesel fuel</span><span class="ci-val red">&#8358;10.16M</span></div>
+                <div class="cost-item"><span class="ci-label">Generator maintenance</span><span class="ci-val red">&#8358;480k</span></div>
+                <div class="cost-item"><span class="ci-label">Generator replacement (5yr)</span><span class="ci-val red">&#8358;360k</span></div>
+                <div class="cost-item"><span class="ci-label">Lost revenue (downtime)</span><span class="ci-val red">&#8358;1.2M</span></div>
+                <div class="cost-divider"></div>
+                <div class="cost-total" style="background:rgba(232,65,90,0.05);border-color:rgba(232,65,90,0.2)">
+                  <span class="ct-label">5-Year diesel cost</span>
+                  <span class="ct-val" style="color:var(--red)">&#8358;61M</span>
+                </div>
+              </div>
+              <div class="cost-side">
+                <div class="cost-side-title sun">Solar Investment</div>
+                <div class="cost-item"><span class="ci-label">Solar panels (20 kWp)</span><span class="ci-val sun">&#8358;1.8M</span></div>
+                <div class="cost-item"><span class="ci-label">Battery storage (40 kWh)</span><span class="ci-val sun">&#8358;1.4M</span></div>
+                <div class="cost-item"><span class="ci-label">Inverter &amp; installation</span><span class="ci-val sun">&#8358;380k</span></div>
+                <div class="cost-item"><span class="ci-label">Annual maintenance</span><span class="ci-val green">&#8358;120k</span></div>
+                <div class="cost-divider"></div>
+                <div class="cost-total saving">
+                  <span class="ct-label">5-Year total cost</span>
+                  <span class="ct-val green">&#8358;4.18M</span>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:16px;background:rgba(0,232,122,0.05);border:1px solid rgba(0,232,122,0.18);border-radius:var(--r2);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+              <div style="font-size:13px;font-weight:700;color:var(--white)">5-Year net saving with solar</div>
+              <div style="font-size:28px;font-weight:800;color:var(--g1)">&#8358;56.8M</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROI Calculator -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:var(--sun-dim);border:1px solid rgba(251,191,36,0.2);color:var(--sun)">R</div>
+            <div>
+              <div class="sc-title">Interactive ROI Calculator</div>
+              <div class="sc-sub">Adjust your parameters to see a personalised return calculation</div>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="roi-inputs">
+              <div class="roi-field">
+                <div class="roi-field-label">Monthly diesel spend <span class="roi-field-val" id="roi-diesel-lbl">&#8358;847k</span></div>
+                <input type="range" class="roi-slider" id="roi-diesel" min="200000" max="3000000" step="50000" value="847000" oninput="updateROI()">
+              </div>
+              <div class="roi-field">
+                <div class="roi-field-label">Solar install cost <span class="roi-field-val" id="roi-install-lbl">&#8358;3.58M</span></div>
+                <input type="range" class="roi-slider" id="roi-install" min="1000000" max="10000000" step="100000" value="3580000" oninput="updateROI()">
+              </div>
+              <div class="roi-field">
+                <div class="roi-field-label">NEPA reliability <span class="roi-field-val" id="roi-nepa-lbl">10%</span></div>
+                <input type="range" class="roi-slider" id="roi-nepa" min="0" max="80" step="5" value="10" oninput="updateROI()">
+              </div>
+              <div class="roi-field">
+                <div class="roi-field-label">Solar coverage <span class="roi-field-val" id="roi-coverage-lbl">94%</span></div>
+                <input type="range" class="roi-slider" id="roi-coverage" min="40" max="100" step="5" value="94" oninput="updateROI()">
+              </div>
+            </div>
+            <div class="roi-result">
+              <div class="roi-item">
+                <div class="roi-num sun" id="roi-payback">14</div>
+                <div class="roi-sub">Months to<br>payback</div>
+              </div>
+              <div class="roi-item">
+                <div class="roi-num green" id="roi-saving">&#8358;56.8M</div>
+                <div class="roi-sub">5-year net<br>saving</div>
+              </div>
+              <div class="roi-item">
+                <div class="roi-num" id="roi-monthly-save">&#8358;797k</div>
+                <div class="roi-sub">Monthly saving<br>after payback</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Solar System Configurator -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:var(--sun-dim);border:1px solid rgba(251,191,36,0.2);color:var(--sun)">S</div>
+            <div>
+              <div class="sc-title">Recommended Solar Systems</div>
+              <div class="sc-sub">Based on your 2,840W load and 312 outage hours this month</div>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="config-options">
+              <div class="config-tile" id="config-basic" onclick="selectConfig('basic')">
+                <div class="ct-size">10<span class="ct-size-unit">kWp</span></div>
+                <div class="ct-panels">24 panels</div>
+                <div class="ct-price">&#8358;2.1M</div>
+                <div class="ct-coverage">60% coverage</div>
+              </div>
+              <div class="config-tile selected" id="config-recommended" onclick="selectConfig('recommended')">
+                <div class="ct-size">20<span class="ct-size-unit">kWp</span></div>
+                <div class="ct-panels">48 panels</div>
+                <div class="ct-price">&#8358;3.58M</div>
+                <div class="ct-coverage">94% coverage</div>
+              </div>
+              <div class="config-tile" id="config-premium" onclick="selectConfig('premium')">
+                <div class="ct-size">30<span class="ct-size-unit">kWp</span></div>
+                <div class="ct-panels">72 panels</div>
+                <div class="ct-price">&#8358;5.2M</div>
+                <div class="ct-coverage">100% + export</div>
+              </div>
+            </div>
+            <div class="config-specs" id="config-specs">
+              <div class="spec-row"><span class="spec-label">Panel type</span><span class="spec-val">Monocrystalline 415W (TIER 1)</span></div>
+              <div class="spec-row"><span class="spec-label">Battery storage</span><span class="spec-val sun">40 kWh lithium (LiFePO4)</span></div>
+              <div class="spec-row"><span class="spec-label">Inverter</span><span class="spec-val">20 kW hybrid inverter</span></div>
+              <div class="spec-row"><span class="spec-label">Backup duration</span><span class="spec-val green">14.1 hours at critical load</span></div>
+              <div class="spec-row"><span class="spec-label">Installation time</span><span class="spec-val">3&ndash;5 working days</span></div>
+              <div class="spec-row"><span class="spec-label">Warranty</span><span class="spec-val">25-year panel / 10-year battery</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ministry Letter Generator -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:rgba(77,143,255,0.1);border:1px solid rgba(77,143,255,0.15);color:var(--blue)">L</div>
+            <div>
+              <div class="sc-title">Ministry Letter Generator</div>
+              <div class="sc-sub">Generate a ready-to-submit official letter for funding or approval</div>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="letter-controls">
+              <button class="letter-type-btn active" id="ltype-funding"  onclick="selectLetterType('funding')">Solar Funding Request</button>
+              <button class="letter-type-btn"        id="ltype-approval" onclick="selectLetterType('approval')">Installation Approval</button>
+              <button class="letter-type-btn"        id="ltype-report"   onclick="selectLetterType('report')">Crisis Impact Report</button>
+            </div>
+
+            <button class="generate-btn" id="generate-btn" onclick="generateLetter()">
+              <span id="gen-icon">&#9654;</span>
+              <span id="gen-label">Generate Letter</span>
+            </button>
+
+            <div class="letter-preview" id="letter-preview">
+              <div class="lp-letterhead">
+                <div class="lp-org">
+                  <div class="lp-org-name" id="lp-org-name">Adekunle Memorial Clinic</div>
+                  <div class="lp-org-sub">Primary Health Centre &mdash; Alimosho, Lagos State</div>
+                </div>
+                <div class="lp-date">
+                  <div id="lp-date"></div>
+                  <div class="lp-ref" id="lp-ref">Ref: PULSE/SOLAR/2025/001</div>
+                </div>
+              </div>
+              <div class="lp-body" id="lp-body"></div>
+            </div>
+
+            <div class="letter-actions" id="letter-actions" style="display:none">
+              <button class="la-btn primary" onclick="copyLetter()">Copy Letter Text</button>
+              <button class="la-btn" onclick="printLetter()">Print / Save PDF</button>
+              <button class="la-btn" onclick="regenerateLetter()">Regenerate</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left-col -->
+
+      <!-- RIGHT COL -->
+      <div class="right-col">
+
+        <!-- Payback gauge -->
+        <div class="sc">
+          <div class="sc-body" style="text-align:center;padding:20px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:14px">Payback Period</div>
+            <div class="pg-circle-wrap">
+              <svg width="140" height="140" viewBox="0 0 140 140">
+                <circle class="pg-track" cx="70" cy="70" r="55"/>
+                <circle class="pg-fill" id="payback-arc" cx="70" cy="70" r="55" stroke-dasharray="345.6" stroke-dashoffset="345.6"/>
+              </svg>
+              <div class="pg-center">
+                <div class="pg-months" id="payback-months">14</div>
+                <div class="pg-unit">months</div>
+              </div>
+            </div>
+            <div class="payback-label">Return on Investment</div>
+            <div class="payback-sub" id="payback-sub">Solar pays for itself in 14 months. Every naira after that is pure saving.</div>
+          </div>
+        </div>
+
+        <!-- Funding sources -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:rgba(0,212,184,0.1);border:1px solid rgba(0,212,184,0.15);color:var(--teal)">F</div>
+            <div><div class="sc-title">Funding Sources</div><div class="sc-sub">Available grants and loans for Nigerian health facilities</div></div>
+          </div>
+          <div class="sc-body" style="padding:14px">
+            <div class="fund-list">
+              <div class="fund-item" onclick="showToast('REA grants up to ₦5M for rural health facilities','info')">
+                <div class="fi-name">Rural Electrification Agency (REA)</div>
+                <div class="fi-type">Federal Government grant programme</div>
+                <div class="fi-badge fb-grant">Grant — up to &#8358;5M</div>
+              </div>
+              <div class="fund-item" onclick="showToast('NASENI solar programme for public health facilities','info')">
+                <div class="fi-name">NASENI Solar Programme</div>
+                <div class="fi-type">Subsidised equipment supply</div>
+                <div class="fi-badge fb-sub">40% subsidy</div>
+              </div>
+              <div class="fund-item" onclick="showToast('UNDP health facility energy fund — application open','info')">
+                <div class="fi-name">UNDP Health Energy Fund</div>
+                <div class="fi-type">International development grant</div>
+                <div class="fi-badge fb-grant">Grant &mdash; $5,000&ndash;$50,000</div>
+              </div>
+              <div class="fund-item" onclick="showToast('Bank of Industry green energy loan at 9% p.a.','info')">
+                <div class="fi-name">Bank of Industry Green Loan</div>
+                <div class="fi-type">Low-interest commercial loan</div>
+                <div class="fi-badge fb-loan">9% p.a. loan</div>
+              </div>
+              <div class="fund-item" onclick="showToast('Lagos State LASG solar initiative for health sector','info')">
+                <div class="fi-name">LASG Solar Initiative</div>
+                <div class="fi-type">Lagos State co-financing programme</div>
+                <div class="fi-badge fb-sub">State co-financing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next steps -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:var(--sun-dim);border:1px solid rgba(251,191,36,0.2);color:var(--sun)">N</div>
+            <div><div class="sc-title">Next Steps</div><div class="sc-sub">Your action plan to go solar</div></div>
+          </div>
+          <div class="sc-body" style="padding:14px">
+            <div class="next-steps">
+              <div class="ns-item" onclick="showToast('Letter generated above — copy and send','info')">
+                <div class="ns-num">1</div>
+                <div class="ns-text"><strong>Generate &amp; send ministry letter</strong>Use the letter generator above. Submit to your State Ministry of Health.</div>
+              </div>
+              <div class="ns-item" onclick="showToast('REA application portal: rea.gov.ng','info')">
+                <div class="ns-num">2</div>
+                <div class="ns-text"><strong>Apply for REA grant</strong>Visit rea.gov.ng. Attach this roadmap report as supporting evidence.</div>
+              </div>
+              <div class="ns-item" onclick="showToast('3 certified solar vendors in Lagos shown on map','info')">
+                <div class="ns-num">3</div>
+                <div class="ns-text"><strong>Get 3 installation quotes</strong>PULSE recommends using NABCEP-certified or NASE-registered vendors only.</div>
+              </div>
+              <div class="ns-item" onclick="showToast('Download this roadmap as PDF','info')">
+                <div class="ns-num">4</div>
+                <div class="ns-text"><strong>Download this roadmap</strong>Save as PDF to include with your grant application as your business case.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /right-col -->
+
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<script type="module" src="../js/pulse-solar.js">
+
+</script>
+</body>
+</html>

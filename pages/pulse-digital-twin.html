@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>PULSE — Digital Twin Simulator</title>
+<link rel="stylesheet" href="../styles/pulse-digital-twin.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+<div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+            <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-name">PUL<span>SE</span></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-sl">Monitoring</div>
+      <a class="ni" href="pulse-dashboard.html"><div class="ni-icon">&#9632;</div>Dashboard</a>
+      <a class="ni" href="pulse-crisis.html"><div class="ni-icon">&#9888;</div>Crisis Input</a>
+      <a class="ni" href="pulse-copilot.html"><div class="ni-icon">&#9675;</div>AI Co-Pilot</a>
+      <a class="ni active" href="#"><div class="ni-icon">&#9670;</div>Digital Twin</a>
+      <div class="nav-sl">Planning</div>
+      <a class="ni" href="#" onclick="window.location.href='./pulse-solar.html'"><div class="ni-icon">&#9728;</div>Solar Roadmap</a>
+      <a class="ni" href="#" onclick="showToast('Appliances coming soon','info')"><div class="ni-icon">&#9741;</div>Appliances</a>
+      <div class="nav-sl">Account</div>
+      <a class="ni" href="login.html"><div class="ni-icon">&#8592;</div>Sign out</a>
+    </nav>
+    <div class="sb-foot">
+      <div class="clinic-pill">
+        <div class="cp-name">Adekunle Memorial Clinic</div>
+        <div class="cp-meta">Alimosho, Lagos &middot; PHC</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+      <a class="tb-back" href="pulse-dashboard.html">&#8592;<span> Dashboard</span></a>
+      <div class="tb-div"></div>
+      <div class="tb-title-wrap">
+        <span class="tb-title">Digital Twin Simulator</span>
+        <span class="tb-sub">Run what-if scenarios before they happen</span>
+      </div>
+      <div class="tb-right">
+        <div class="pro-gate-badge">&#9670; <span>Pro Feature</span></div>
+        <div class="tb-clock" id="live-clock">--:--</div>
+        <div class="tb-avatar">CA</div>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- LEFT COL -->
+      <div class="left-col">
+
+        <!-- Scenario Builder -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:rgba(155,111,255,0.1);border:1px solid rgba(155,111,255,0.2);color:var(--purple)">S</div>
+            <div>
+              <div class="sc-title">Scenario Builder</div>
+              <div class="sc-sub">Define the conditions you want to simulate</div>
+            </div>
+          </div>
+          <div class="sc-body">
+
+            <!-- Preset chips -->
+            <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px">Quick Presets</div>
+            <div class="preset-chips" id="preset-chips">
+              <div class="chip" onclick="loadPreset('surgery-night')">Surgery at night, NEPA off</div>
+              <div class="chip" onclick="loadPreset('delivery-lowfuel')">Delivery + critical fuel</div>
+              <div class="chip" onclick="loadPreset('nepa-36h')">NEPA offline 36 hours</div>
+              <div class="chip" onclick="loadPreset('full-load')">Full ward, all devices on</div>
+              <div class="chip" onclick="loadPreset('best-case')">Best case — NEPA on, full fuel</div>
+            </div>
+
+            <!-- Natural language query -->
+            <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin:16px 0 8px">Describe your scenario</div>
+            <div class="query-area">
+              <textarea class="query-textarea" id="scenario-query" rows="2"
+                placeholder="e.g. What if NEPA stays off for 12 hours and we have a delivery at 9 PM with only 30% fuel left?"></textarea>
+              <div class="query-hint">Describe any situation in plain English. PULSE will parse the parameters automatically.</div>
+            </div>
+
+            <!-- Parameters -->
+            <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin:18px 0 12px">Simulation Parameters</div>
+            <div class="params-grid">
+
+              <div class="param-block">
+                <div class="param-label">Fuel Level at Start <span class="param-val amber" id="fuel-label">38%</span></div>
+                <input type="range" class="param-slider" id="fuel-slider" min="5" max="100" value="38" oninput="updateParam('fuel',this.value)">
+              </div>
+
+              <div class="param-block">
+                <div class="param-label">NEPA Offline Duration <span class="param-val red" id="nepa-label">8 hrs</span></div>
+                <input type="range" class="param-slider" id="nepa-slider" min="0" max="48" value="8" oninput="updateParam('nepa',this.value)">
+              </div>
+
+              <div class="param-block">
+                <div class="param-label">Clinical Situation</div>
+                <div class="param-options" id="situation-opts">
+                  <div class="popt sel-green" data-val="Routine"  onclick="selectPopt(this,'situation-opts','sel-green')">Routine</div>
+                  <div class="popt" data-val="Delivery" onclick="selectPopt(this,'situation-opts','sel-amber')">Delivery</div>
+                  <div class="popt" data-val="Surgery"  onclick="selectPopt(this,'situation-opts','sel-red')">Surgery</div>
+                  <div class="popt" data-val="Emergency" onclick="selectPopt(this,'situation-opts','sel-red')">Emergency</div>
+                </div>
+              </div>
+
+              <div class="param-block">
+                <div class="param-label">Simulation Window <span class="param-val white" id="window-label">12 hrs</span></div>
+                <input type="range" class="param-slider" id="window-slider" min="2" max="48" value="12" oninput="updateParam('window',this.value)">
+              </div>
+
+              <div class="param-block">
+                <div class="param-label">Triage Active?</div>
+                <div class="param-options" id="triage-opts">
+                  <div class="popt sel-green" data-val="yes" onclick="selectPopt(this,'triage-opts','sel-green')">Yes — PULSE active</div>
+                  <div class="popt" data-val="no"  onclick="selectPopt(this,'triage-opts','sel-red')">No — manual only</div>
+                </div>
+              </div>
+
+              <div class="param-block">
+                <div class="param-label">Smart Switches?</div>
+                <div class="param-options" id="smart-opts">
+                  <div class="popt sel-green" data-val="yes" onclick="selectPopt(this,'smart-opts','sel-green')">Connected</div>
+                  <div class="popt" data-val="no"  onclick="selectPopt(this,'smart-opts','sel-amber')">Manual only</div>
+                </div>
+              </div>
+
+            </div>
+
+            <button class="run-btn" id="run-btn" onclick="runSimulation()">
+              <span id="run-icon">&#9654;</span>
+              <span id="run-label">Run Simulation</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RESULTS (hidden until simulation runs) -->
+        <div class="results-section" id="results-section">
+
+          <!-- Scenario label -->
+          <div class="scenario-label" id="scenario-label">
+            <div class="sl-dot"></div>
+            <span id="scenario-label-text">Simulation complete</span>
+          </div>
+
+          <!-- Timeline -->
+          <div class="sc">
+            <div class="sc-head">
+              <div class="sc-head-icon" style="background:rgba(0,212,184,0.1);border:1px solid rgba(0,212,184,0.15);color:var(--teal)">T</div>
+              <div>
+                <div class="sc-title">Simulated Timeline</div>
+                <div class="sc-sub" id="timeline-sub">Projected events over simulation window</div>
+              </div>
+            </div>
+            <div class="sc-body">
+              <div class="timeline-wrap" id="timeline-wrap"></div>
+            </div>
+          </div>
+
+          <!-- Risk breakdown -->
+          <div class="sc">
+            <div class="sc-head">
+              <div class="sc-head-icon" style="background:rgba(232,65,90,0.1);border:1px solid rgba(232,65,90,0.15);color:var(--red)">R</div>
+              <div>
+                <div class="sc-title">Risk Breakdown</div>
+                <div class="sc-sub">Individual risk factors contributing to failure probability</div>
+              </div>
+            </div>
+            <div class="sc-body">
+              <div class="risk-bars" id="risk-bars"></div>
+            </div>
+          </div>
+
+          <!-- Recommendation -->
+          <div class="rec-card" id="rec-card">
+            <div class="rec-title">PULSE Recommendation</div>
+            <div id="rec-items"></div>
+          </div>
+
+        </div>
+
+      </div><!-- /left-col -->
+
+      <!-- RIGHT COL -->
+      <div class="right-col">
+
+        <!-- Probability gauge -->
+        <div class="prob-gauge-card" id="prob-gauge-card">
+          <div class="pg-title">Failure Probability</div>
+          <div class="pg-wrap">
+            <svg width="200" height="110" viewBox="0 0 200 110">
+              <!-- Track: half-circle arc -->
+              <path class="pg-arc-track" d="M 20 100 A 80 80 0 0 1 180 100" stroke-dasharray="251" stroke-dashoffset="0"/>
+              <!-- Fill: animated -->
+              <path class="pg-arc-fill safe" id="pg-fill"
+                d="M 20 100 A 80 80 0 0 1 180 100"
+                stroke-dasharray="251"
+                stroke-dashoffset="251"/>
+            </svg>
+            <div class="pg-num safe" id="pg-num">--<span class="pg-pct">%</span></div>
+          </div>
+          <div class="pg-risk-label" id="pg-label">Run a simulation</div>
+          <div class="pg-risk-desc" id="pg-desc">Configure your scenario and click Run to see the failure probability for this clinic.</div>
+        </div>
+
+        <!-- Current vitals -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:var(--g-dim);border:1px solid var(--border2);color:var(--g1)">V</div>
+            <div><div class="sc-title">Current Vitals</div><div class="sc-sub">Baseline for simulation</div></div>
+          </div>
+          <div class="sc-body" style="padding:14px">
+            <div class="vitals-mini">
+              <div class="vm-row"><span class="vm-label">Generator</span><span class="vm-val a">38% (76L)</span></div>
+              <div class="vm-row"><span class="vm-label">NEPA Status</span><span class="vm-val r">Offline 7h 23m</span></div>
+              <div class="vm-row"><span class="vm-label">Fridge Temp</span><span class="vm-val g">4.8°C — Safe</span></div>
+              <div class="vm-row"><span class="vm-label">Current Load</span><span class="vm-val w">2,840W</span></div>
+              <div class="vm-row"><span class="vm-label">Protocol</span><span class="vm-val a">Delivery Active</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved scenarios -->
+        <div class="sc">
+          <div class="sc-head">
+            <div class="sc-head-icon" style="background:rgba(77,143,255,0.1);border:1px solid rgba(77,143,255,0.15);color:var(--blue)">H</div>
+            <div><div class="sc-title">Recent Simulations</div><div class="sc-sub">Tap to reload</div></div>
+          </div>
+          <div class="sc-body" style="padding:14px">
+            <div class="saved-scenarios" id="saved-list">
+              <div class="saved-item" onclick="reloadScenario(0)">
+                <div class="si-dot" style="background:var(--amber)"></div>
+                <div class="si-body">
+                  <div class="si-title">Surgery + 25% fuel, NEPA off</div>
+                  <div class="si-meta">2 hours ago</div>
+                </div>
+                <div class="si-risk" style="color:var(--amber)">58%</div>
+              </div>
+              <div class="saved-item" onclick="reloadScenario(1)">
+                <div class="si-dot" style="background:var(--red)"></div>
+                <div class="si-body">
+                  <div class="si-title">NEPA off 36h, full load</div>
+                  <div class="si-meta">Yesterday</div>
+                </div>
+                <div class="si-risk" style="color:var(--red)">91%</div>
+              </div>
+              <div class="saved-item" onclick="reloadScenario(2)">
+                <div class="si-dot" style="background:var(--g1)"></div>
+                <div class="si-body">
+                  <div class="si-title">Delivery + 60% fuel, triage on</div>
+                  <div class="si-meta">3 days ago</div>
+                </div>
+                <div class="si-risk" style="color:var(--g1)">12%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compare -->
+        <div class="compare-bar" onclick="toggleCompare()" style="position:relative">
+          <div class="compare-icon">&#8652;</div>
+          <div class="compare-text">
+            <strong>Compare Scenarios</strong>
+            Side-by-side risk analysis
+          </div>
+          <div class="compare-arrow">&#8594;</div>
+        </div>
+
+        <div class="compare-table" id="compare-table">
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;padding:0 4px;display:grid;grid-template-columns:1.5fr 0.7fr 0.8fr;gap:10px">
+            <span>Scenario</span><span style="text-align:center">Risk</span><span style="text-align:right">Runtime</span>
+          </div>
+          <div id="compare-rows"></div>
+        </div>
+
+      </div><!-- /right-col -->
+
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<script type="module" src="../js/pulse-digital-twin.js"></script>
+</body>
+</html>

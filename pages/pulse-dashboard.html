@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Dashboard</title>
+<link rel="stylesheet" href="../styles/pulse-dashboard.css">
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+
+<!-- SPOTLIGHT -->
+<div class="spotlight" id="spotlight"></div>
+
+<!-- ══════════════════════════════
+     GUIDE TOOLTIP
+══════════════════════════════ -->
+<div class="guide-tip" id="guide-tip">
+  <div class="gt-header">
+    <div class="gt-icon" id="gt-icon">P</div>
+    <div>
+      <div class="gt-tag">PULSE Guide</div>
+    </div>
+    <div class="gt-step" id="gt-step">1 / 6</div>
+  </div>
+  <div class="gt-title" id="gt-title">Welcome to your dashboard</div>
+  <div class="gt-body"  id="gt-body">This is your clinic's live energy command centre. Everything PULSE monitors about your facility is shown here in real time.</div>
+  <div class="gt-footer">
+    <div class="gt-dots" id="gt-dots"></div>
+    <button class="gt-skip" onclick="skipGuide()">Skip guide</button>
+    <button class="gt-okay-btn" id="gt-okay-btn" onclick="nextGuideTip()">Got it</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     APP SHELL
+══════════════════════════════ -->
+<div class="app-shell">
+
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sb-logo-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4">
+            <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,0.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-logo-name">PUL<span>SE</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Monitoring</div>
+      <a class="nav-item active" href="#" id="nav-dashboard">
+        <div class="nav-icon">&#9632;</div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-crisis.html'">
+        <div class="nav-icon">&#9888;</div>
+        Crisis Input
+        <span class="nav-badge">!</span>
+      </a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-copilot.html'">
+        <div class="nav-icon">&#9675;</div>
+        AI Co-Pilot
+      </a>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-digital-twin.html'">
+        <div class="nav-icon">&#9670;</div>
+        Digital Twin
+      </a>
+
+      <div class="nav-section-label">Planning</div>
+      <a class="nav-item" href="#" onclick="window.location.href='./pulse-solar.html'">
+        <div class="nav-icon">&#9728;</div>
+        Solar Roadmap
+        <span class="nav-badge green">New</span>
+      </a>
+      <a class="nav-item" href="#" onclick="showToast('Appliances — coming soon','warning')">
+        <div class="nav-icon">&#9741;</div>
+        Appliances
+      </a>
+
+      <div class="nav-section-label">Account</div>
+      <a class="nav-item" href="#" onclick="showToast('Settings — coming soon','warning')">
+        <div class="nav-icon">&#9881;</div>
+        Settings
+      </a>
+      <a class="nav-item" href="login.html">
+        <div class="nav-icon">&#8592;</div>
+        Sign out
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="clinic-card" onclick="showToast('Clinic profile — coming soon','warning')">
+        <div class="clinic-name" id="sb-clinic-name">Adekunle Memorial Clinic</div>
+        <div class="clinic-meta" id="sb-clinic-meta">Alimosho, Lagos &nbsp;&#183;&nbsp; PHC</div>
+        <div class="clinic-status">
+          <div class="status-dot"></div>
+          <div class="status-text">PULSE Active</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN AREA ── -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="greeting">
+          <div class="greeting-top" id="greeting-top">Good morning</div>
+          <div class="greeting-name">Dr. <span id="greeting-name">Chukwuemeka</span> — <span style="color:var(--mid);font-size:14px;font-weight:400" id="greeting-clinic">Adekunle Memorial Clinic</span></div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-time" id="live-clock">--:-- --</div>
+        <div class="topbar-icon-btn" onclick="toggleGuide()" title="Open guide">
+          ?
+          <div class="notif-badge" id="guide-badge" style="background:var(--g1)"></div>
+        </div>
+        <div class="topbar-icon-btn" onclick="showToast('3 unread alerts','warning')" title="Alerts">
+          &#9993;
+          <div class="notif-badge"></div>
+        </div>
+        <div class="topbar-avatar" id="avatar" onclick="showToast('Profile settings — coming soon','warning')">CA</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD CONTENT -->
+    <div class="dash-content" id="dash-content">
+
+      <!-- AI PREDICTION BANNER -->
+      <div id="section-banner">
+        <div class="ai-banner" id="ai-banner" onclick="showToast('Opening crisis protocol...','warning')">
+          <div class="banner-priority warning"></div>
+          <div class="ai-banner-icon"><div class="ai-pulse-dot"></div></div>
+          <div class="ai-banner-body">
+            <div class="ai-banner-label">PULSE AI Prediction</div>
+            <div class="ai-banner-text" id="banner-text">Generator will reach critical threshold in approximately 4.1 hours at current load.</div>
+            <div class="ai-banner-sub" id="banner-sub">Thursday is historically your lowest fuel day. Recommend fuel top-up by 14:00. Tap to activate crisis protocol.</div>
+          </div>
+          <div class="ai-banner-arrow" onclick="window.location.href='pulse-crisis.html'">&#8594;</div>
+        </div>
+      </div>
+
+      <!-- PRO UPGRADE BANNER (shows after 7 days of use) -->
+      <div id="pro-upgrade-banner" class="pro-banner" style="display:none">
+        <div class="pro-banner-crown">&#9733;</div>
+        <div class="pro-banner-body">
+          <div class="pro-banner-tag">PULSE Pro — Upgrade Available</div>
+          <div class="pro-banner-text" id="pro-savings-text">You have saved an estimated 6.2 hours of generator runtime this week.</div>
+          <div class="pro-banner-sub">Upgrade to Pro to unlock the Digital Twin Simulator, AI scenario builder, and multi-ward automation.</div>
+        </div>
+        <button class="pro-banner-btn" onclick="window.location.href='pulse-pricing.html'">View Pro Plans</button>
+        <button class="pro-banner-close" onclick="dismissProBanner()" title="Dismiss">&#215;</button>
+      </div>
+
+      <!-- NEPA STATUS -->
+      <div id="section-nepa">
+        <div class="section-head">
+          <div class="section-title">NEPA Grid Status</div>
+          <div class="section-head-right" onclick="showToast('NEPA history — coming soon','warning')">View history &#8594;</div>
+        </div>
+        <div class="nepa-banner offline" id="nepa-banner">
+          <div class="nepa-indicator"></div>
+          <div class="nepa-text">
+            <div class="nepa-main" id="nepa-main">NEPA Supply — Offline</div>
+            <div class="nepa-sub" id="nepa-sub">Power has been unavailable since 06:42 this morning</div>
+          </div>
+          <div class="nepa-duration" id="nepa-duration">7h 23m</div>
+          <button class="nepa-toggle-btn" onclick="toggleNEPA()">Simulate supply</button>
+        </div>
+      </div>
+
+      <!-- VITALS
+           NOTE FOR DEVELOPERS: When smart switches are connected (Phase 2),
+           these cards receive live data via the PULSE smart switch API endpoint:
+             GET /api/devices/{clinicId}/readings
+           Returns: { generator_fuel_pct, fridge_temp_c, total_load_w, ups_pct, timestamp }
+           Until smart switches are installed, values are entered manually via
+           the Crisis Input page and estimated using the appliance registry.
+           Replace the simulated values in startLiveData() with real API calls.
+      -->
+      <!-- VITALS -->
+      <div id="section-vitals">
+        <div class="section-head">
+          <div class="section-title">Energy Vitals</div>
+          <div class="section-head-right" onclick="showToast('Full vitals report — coming soon','warning')">All readings &#8594;</div>
+        </div>
+        <div class="vitals-grid">
+
+          <!-- Generator Fuel -->
+          <div class="vital-card vc-generator" onclick="openCardDetail('generator')">
+            <div class="vc-header">
+              <div class="vc-label">Generator Fuel</div>
+              <div class="vc-icon">G</div>
+            </div>
+            <div class="gauge-wrap">
+              <div class="gauge-svg">
+                <svg width="96" height="96" viewBox="0 0 96 96">
+                  <circle class="gauge-track" cx="48" cy="48" r="38" stroke-dasharray="200 999" stroke-dashoffset="-50" transform="rotate(135 48 48)"/>
+                  <circle id="gen-gauge" class="gauge-fill" cx="48" cy="48" r="38"
+                    stroke="url(#genGrad)"
+                    stroke-dasharray="0 240"
+                    stroke-dashoffset="-50"
+                    transform="rotate(135 48 48)"/>
+                  <defs>
+                    <linearGradient id="genGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%"   stop-color="#e8415a"/>
+                      <stop offset="50%"  stop-color="#f0a500"/>
+                      <stop offset="100%" stop-color="#00e87a"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="gauge-val-wrap">
+                  <span class="gauge-val" id="gen-val">38%</span>
+                  <span class="gauge-unit">fuel</span>
+                </div>
+              </div>
+            </div>
+            <div class="vc-status-row">
+              <div class="vc-status-dot amber"></div>
+              <span class="vc-status-text" id="gen-status">Low — 76L remaining</span>
+            </div>
+            <div class="vc-trend">
+              Est. runtime: <span class="vc-trend-val trend-amber" id="gen-runtime" style="color:var(--amber);margin-left:4px">4.1 hrs</span>
+            </div>
+          </div>
+
+          <!-- Vaccine Fridge -->
+          <div class="vital-card vc-fridge" onclick="openCardDetail('fridge')">
+            <div class="vc-header">
+              <div class="vc-label">Vaccine Fridge</div>
+              <div class="vc-icon">V</div>
+            </div>
+            <div class="gauge-wrap">
+              <div class="gauge-svg">
+                <svg width="96" height="96" viewBox="0 0 96 96">
+                  <circle class="gauge-track" cx="48" cy="48" r="38" stroke-dasharray="200 999" stroke-dashoffset="-50" transform="rotate(135 48 48)"/>
+                  <circle id="fridge-gauge" class="gauge-fill" cx="48" cy="48" r="38"
+                    stroke="#00d4b8"
+                    stroke-dasharray="0 240"
+                    stroke-dashoffset="-50"
+                    transform="rotate(135 48 48)"/>
+                </svg>
+                <div class="gauge-val-wrap">
+                  <span class="gauge-val" id="fridge-val" style="color:var(--teal)">4.8</span>
+                  <span class="gauge-unit">&#176;C</span>
+                </div>
+              </div>
+            </div>
+            <div class="vc-status-row">
+              <div class="vc-status-dot green"></div>
+              <span class="vc-status-text">Safe range: 2&#176;C — 8&#176;C</span>
+            </div>
+            <div class="vc-trend">
+              Trend: <span class="vc-trend-val trend-up" style="color:var(--g1);margin-left:4px">Stable</span>
+            </div>
+          </div>
+
+          <!-- Total Load -->
+          <div class="vital-card vc-load" onclick="openCardDetail('load')">
+            <div class="vc-header">
+              <div class="vc-label">Current Load</div>
+              <div class="vc-icon">L</div>
+            </div>
+            <div class="vc-big-val" id="load-val" style="color:var(--g1)">2,840<span style="font-size:14px;font-weight:400;color:var(--mid)">W</span></div>
+            <div class="linear-gauge">
+              <div class="lg-bar">
+                <div class="lg-fill" id="load-bar" style="width:71%;background:linear-gradient(90deg,var(--g1),var(--teal))"></div>
+              </div>
+              <div class="lg-labels">
+                <span>0W</span><span>Generator capacity: 16,000W</span>
+              </div>
+            </div>
+            <div class="vc-status-row">
+              <div class="vc-status-dot green"></div>
+              <span class="vc-status-text">71% of generator capacity</span>
+            </div>
+            <div class="vc-trend">
+              Critical load: <span class="vc-trend-val" style="color:var(--teal);margin-left:4px">1,140W</span>
+            </div>
+          </div>
+
+          <!-- Battery / UPS -->
+          <div class="vital-card vc-generator" onclick="openCardDetail('ups')">
+            <div class="vc-header">
+              <div class="vc-label">UPS / Battery</div>
+              <div class="vc-icon">B</div>
+            </div>
+            <div class="vc-big-val" id="ups-val" style="color:var(--amber)">62<span style="font-size:14px;font-weight:400;color:var(--mid)">%</span></div>
+            <div class="linear-gauge">
+              <div class="lg-bar">
+                <div class="lg-fill" id="ups-bar" style="width:62%;background:linear-gradient(90deg,var(--amber),#f0c040)"></div>
+              </div>
+              <div class="lg-labels"><span>Empty</span><span>Full</span></div>
+            </div>
+            <div class="vc-status-row">
+              <div class="vc-status-dot amber"></div>
+              <span class="vc-status-text" id="ups-status">37 min backup at critical load</span>
+            </div>
+            <div class="vc-trend">
+              Charging: <span class="vc-trend-val trend-up" style="color:var(--amber);margin-left:4px">On generator</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FUEL TIMELINE -->
+      <div id="section-fuel">
+        <div class="fuel-timeline-card">
+          <div class="section-head" style="margin-bottom:12px">
+            <div class="section-title">Generator Runtime Projection</div>
+            <div class="section-head-right" style="font-size:11px;color:var(--mid)">Based on current load &amp; 38% fuel</div>
+          </div>
+          <div class="fuel-bar-wrap">
+            <div class="fuel-timeline">
+              <div class="fuel-timeline-fill" id="fuel-timeline-fill" style="width:38%"></div>
+            </div>
+            <div class="fuel-timeline-labels">
+              <span>Now (38%)</span>
+              <span>25% — Warning</span>
+              <span>10% — Critical</span>
+              <span>Empty</span>
+            </div>
+          </div>
+          <div class="fuel-checkpoints">
+            <div class="fuel-cp">
+              <span class="fcp-time green">Now</span>
+              <span class="fcp-label">14:35</span>
+            </div>
+            <div class="fuel-cp">
+              <span class="fcp-time amber" id="cp-warning">+2.4h</span>
+              <span class="fcp-label">Warning threshold</span>
+            </div>
+            <div class="fuel-cp">
+              <span class="fcp-time red" id="cp-critical">+3.6h</span>
+              <span class="fcp-label">Critical threshold</span>
+            </div>
+            <div class="fuel-cp">
+              <span class="fcp-time red" id="cp-empty">+4.1h</span>
+              <span class="fcp-label">Generator stops</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ECG -->
+      <div id="section-ecg">
+        <div class="ecg-card">
+          <div class="ecg-header">
+            <div class="ecg-title">Live Energy Waveform</div>
+            <div class="ecg-live"><div class="ecg-live-dot"></div>Live — updating every 2s</div>
+          </div>
+          <div class="ecg-canvas-wrap">
+            <canvas id="ecgCanvas"></canvas>
+          </div>
+          <div class="ecg-stats">
+            <div class="ecg-stat">
+              <div class="ecg-stat-label">Avg Load (24h)</div>
+              <div class="ecg-stat-val">2,610W</div>
+            </div>
+            <div class="ecg-stat">
+              <div class="ecg-stat-label">Peak Today</div>
+              <div class="ecg-stat-val amber">3,240W</div>
+            </div>
+            <div class="ecg-stat">
+              <div class="ecg-stat-label">Current</div>
+              <div class="ecg-stat-val green" id="ecg-current">2,840W</div>
+            </div>
+            <div class="ecg-stat">
+              <div class="ecg-stat-label">Efficiency</div>
+              <div class="ecg-stat-val green">87%</div>
+            </div>
+            <div class="ecg-stat">
+              <div class="ecg-stat-label">Crisis Events (7d)</div>
+              <div class="ecg-stat-val">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM GRID -->
+      <div class="bottom-grid" id="section-wards">
+
+        <!-- Ward Status -->
+        <div class="ward-card">
+          <div class="section-head" style="margin-bottom:14px">
+            <div class="section-title">Ward Status</div>
+            <div class="section-head-right" onclick="showToast('All wards view — coming soon','warning')">All wards</div>
+          </div>
+          <div class="ward-list">
+            <div class="ward-item wi-active" onclick="showToast('Delivery Room — active, consuming 340W','warning')">
+              <div class="ward-item-dot"></div>
+              <div class="ward-item-name">Delivery Room</div>
+              <div class="ward-item-status">Active</div>
+              <div class="ward-item-power">340W</div>
+            </div>
+            <div class="ward-item wi-active" onclick="showToast('Pharmacy — active, consuming 180W','warning')">
+              <div class="ward-item-dot"></div>
+              <div class="ward-item-name">Pharmacy / Cold Storage</div>
+              <div class="ward-item-status">Active</div>
+              <div class="ward-item-power">180W</div>
+            </div>
+            <div class="ward-item wi-caution" onclick="showToast('Operating Theatre — on standby, power check recommended','warning')">
+              <div class="ward-item-dot"></div>
+              <div class="ward-item-name">Operating Theatre</div>
+              <div class="ward-item-status">Caution</div>
+              <div class="ward-item-power">820W</div>
+            </div>
+            <div class="ward-item wi-active" onclick="showToast('Maternity Ward — active','warning')">
+              <div class="ward-item-dot"></div>
+              <div class="ward-item-name">Maternity Ward</div>
+              <div class="ward-item-status">Active</div>
+              <div class="ward-item-power">210W</div>
+            </div>
+            <div class="ward-item wi-standby" onclick="showToast('Staff Room — standby, AC on smart switch','warning')">
+              <div class="ward-item-dot"></div>
+              <div class="ward-item-name">Staff Room</div>
+              <div class="ward-item-status">Standby</div>
+              <div class="ward-item-power">1,100W</div>
+            </div>
+            <div class="ward-item wi-standby" onclick="showToast('Admin Office — standby','warning')">
+              <div class="ward-item-dot"></div>
+              <div class="ward-item-name">Admin Office</div>
+              <div class="ward-item-status">Standby</div>
+              <div class="ward-item-power">190W</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Events -->
+        <div class="events-card">
+          <div class="section-head" style="margin-bottom:14px">
+            <div class="section-title">Recent Events</div>
+            <div class="section-head-right" onclick="showToast('Full event log — coming soon','warning')">View all</div>
+          </div>
+          <div class="event-list">
+            <div class="event-item" onclick="showToast('Crisis at 06:42 — triage protocol activated','warning')">
+              <div class="event-head">
+                <span class="event-type et-crisis">Crisis</span>
+                <span class="event-time">06:42</span>
+              </div>
+              <div class="event-desc">NEPA supply cut. Triage protocol activated. Generator runtime extended by 2.7hrs.</div>
+            </div>
+            <div class="event-item" onclick="showToast('Warning at 11:15 — fridge temp spike','warning')">
+              <div class="event-head">
+                <span class="event-type et-warning">Warning</span>
+                <span class="event-time">11:15</span>
+              </div>
+              <div class="event-desc">Vaccine fridge temperature spiked to 7.2&#176;C. Auto-alert sent. Resolved in 8 minutes.</div>
+            </div>
+            <div class="event-item" onclick="showToast('Fuel order placed at 12:30','warning')">
+              <div class="event-head">
+                <span class="event-type et-info">Fuel</span>
+                <span class="event-time">12:30</span>
+              </div>
+              <div class="event-desc">Fuel order draft generated by AI co-pilot. 100L diesel requested from supplier.</div>
+            </div>
+            <div class="event-item" onclick="showToast('Triage test at 13:50','warning')">
+              <div class="event-head">
+                <span class="event-type et-info">System</span>
+                <span class="event-time">13:50</span>
+              </div>
+              <div class="event-desc">Daily PULSE self-check completed. All systems nominal. Digital twin updated.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions-card">
+          <div class="section-head" style="margin-bottom:14px">
+            <div class="section-title">Quick Actions</div>
+          </div>
+          <div class="action-btns">
+            <button class="action-btn primary" onclick="window.location.href='pulse-crisis.html'">
+              <div class="ab-icon">!</div>
+              <div class="ab-text">
+                <span class="ab-label">Activate Triage</span>
+                <span class="ab-sub">Launch crisis protocol now</span>
+              </div>
+            </button>
+            <button class="action-btn" onclick="window.location.href='pulse-copilot.html'">
+              <div class="ab-icon">A</div>
+              <div class="ab-text">
+                <span class="ab-label">Ask AI Co-Pilot</span>
+                <span class="ab-sub">Chat with PULSE</span>
+              </div>
+            </button>
+            <button class="action-btn" onclick="window.location.href='pulse-digital-twin.html'">
+              <div class="ab-icon">S</div>
+              <div class="ab-text">
+                <span class="ab-label">Run Simulation</span>
+                <span class="ab-sub">What-if scenario builder</span>
+              </div>
+            </button>
+            <button class="action-btn danger" onclick="window.location.href='pulse-solar.html'">
+              <div class="ab-icon">F</div>
+              <div class="ab-text">
+                <span class="ab-label">Emergency Fuel Request</span>
+                <span class="ab-sub">Draft &amp; send fuel order</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /dash-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<script type="module" src="../js/pulse-dashboard.js"></script>
+</body>
+</html>
