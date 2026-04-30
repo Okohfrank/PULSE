@@ -392,11 +392,7 @@ function updatePriceDisplay(price, source) {
 
 function loadHistory() {
   if (!uid) return;
-  var histRef = query(
-    ref(db, 'clinics/' + uid + '/fuelLogs'),
-    orderByChild('timestamp'),
-    limitToLast(30)
-  );
+  var histRef = ref(db, 'clinics/' + uid + '/fuelLogs');
   get(histRef).then(function(snap) {
     if (!snap.exists()) {
       refuelHistory = [];
@@ -413,7 +409,7 @@ function loadHistory() {
     renderHistory(entries);
     computeStats();
     checkAnomalies(entries);
-    renderChart(entries);
+    setTimeout(function() { renderChart(entries); }, 100);
   }).catch(function() {});
 }
 
