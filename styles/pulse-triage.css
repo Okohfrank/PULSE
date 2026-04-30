@@ -75,7 +75,7 @@ body::before {
 .clinic-pill { background:var(--card); border:1px solid var(--border); border-radius:var(--r2); padding:10px 14px; }
 .cp-name { font-size:12px; font-weight:700; color:var(--white); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .cp-meta { font-size:10px; color:var(--mid); }
-.sidebar-overlay { display:none; position:fixed; inset:0; z-index:190; background:rgba(0,0,0,0.6); }
+
 
 /* main */
 .main-area { margin-left:var(--sidebar-w); flex:1; display:flex; flex-direction:column; min-height:100vh; max-width:calc(100vw - var(--sidebar-w)); overflow-x:hidden; }

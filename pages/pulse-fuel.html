@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Fuel Manager</title>
+<link rel="stylesheet" href="../styles/pulse-fuel.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><div class="tdot"></div><span id="toast-msg"></span></div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success-overlay">
+  <div class="so-card">
+    <div class="so-ring">⛽</div>
+    <div class="so-title">Refuel Logged</div>
+    <div class="so-litres" id="so-litres">—</div>
+    <div class="so-unit">litres added</div>
+    <div class="so-runtime" id="so-runtime">⏱ Calculating runtime...</div>
+    <div class="so-sub" id="so-sub">Generator fuel level updated. Dashboard gauge will reflect the new level immediately.</div>
+    <button class="so-btn" onclick="closeSuccess()">Back to Fuel Manager</button>
+  </div>
+</div>
+
+<div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#00e87a" stroke-width="1.2" stroke-dasharray="3 2" opacity=".4"><animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/></circle>
+          <circle cx="16" cy="16" r="8" fill="rgba(0,232,122,.07)" stroke="#00e87a" stroke-width="1.2"/>
+          <path d="M5 16 L8 16 L10.5 11 L14 21 L17 14 L19.5 18 L22 16 L27 16" stroke="#00e87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 80;50 30;0 80" dur="2.5s" repeatCount="indefinite"/></path>
+          <circle cx="16" cy="16" r="2" fill="#00e87a"><animate attributeName="opacity" values="1;.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+      <div class="sb-name">PUL<span>SE</span></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-sl">Monitoring</div>
+      <a class="ni" onclick="closeSidebar()" href="pulse-dashboard.html"><div class="ni-icon">&#9632;</div>Dashboard</a>
+      <a class="ni" onclick="closeSidebar()" href="pulse-crisis.html"><div class="ni-icon">&#9888;</div>Crisis Input</a>
+      <a class="ni" onclick="closeSidebar()" href="pulse-copilot.html"><div class="ni-icon">&#9675;</div>AI Co-Pilot</a>
+      <a class="ni" onclick="closeSidebar()" href="pulse-digital-twin.html"><div class="ni-icon">&#9670;</div>Digital Twin</a>
+      <div class="nav-sl">Operations</div>
+      <a class="ni active" href="#"><div class="ni-icon">⛽</div>Fuel Manager</a>
+      <div class="nav-sl">Planning</div>
+      <a class="ni" onclick="closeSidebar()" href="pulse-solar.html"><div class="ni-icon">&#9728;</div>Solar Roadmap</a>
+      <div class="nav-sl">Account</div>
+      <a class="ni" onclick="closeSidebar()" href="pulse-login.html"><div class="ni-icon">&#8592;</div>Sign out</a>
+    </nav>
+    <div class="sb-foot"><div class="cp-pill"><div class="cp-name" id="sb-clinic">My Clinic</div><div class="cp-meta" id="sb-meta">Loading...</div></div></div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+      <a class="tb-back" onclick="closeSidebar()" href="pulse_dashboard.html">&#8592; Dashboard</a>
+      <div class="tb-div"></div>
+      <div class="tb-title"><span class="tb-t1">Fuel Manager</span><span class="tb-t2" id="tb-sub">Real-time fuel tracking — auto-calculated from your generator specs</span></div>
+      <div class="tb-right">
+        <div class="tb-clock" id="live-clock">--:--</div>
+        <div class="tb-avatar" id="tb-avatar">CA</div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="fuel-hero">
+      <div class="fh-inner">
+        <div class="fh-icon">⛽</div>
+        <div class="fh-body">
+          <div class="fh-label">Fuel Intelligence — <span id="clinic-name-hero">My Clinic</span></div>
+          <div class="fh-title">Generator fuel tracked automatically from every refuel you log</div>
+          <div class="fh-sub">Log a refuel once. PULSE calculates your remaining fuel, runtime, and cost in real time — no manual percentage input needed.</div>
+        </div>
+        <div class="fh-stats">
+          <div class="fh-stat"><div class="fh-num" id="hero-refuels">0</div><div class="fh-lbl">Refuels<br>this month</div></div>
+          <div class="fh-stat"><div class="fh-num" id="hero-spent" style="color:var(--red)">₦0</div><div class="fh-lbl">Diesel spend<br>this month</div></div>
+          <div class="fh-stat"><div class="fh-num" id="hero-litres">0L</div><div class="fh-lbl">Total litres<br>purchased</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE GAUGE -->
+    <div class="gauge-strip">
+      <div class="gauge-wrap">
+        <div class="gauge-label-row">
+          <span class="gauge-title">Current Fuel Level</span>
+          <span class="gauge-pct" id="gauge-pct-text">38%</span>
+        </div>
+        <div class="gauge-track"><div class="gauge-fill" id="gauge-fill" style="width:38%;background:linear-gradient(90deg,var(--amber),var(--fuel))"></div></div>
+        <div class="gauge-markers"><span class="gauge-marker">0%</span><span class="gauge-marker" style="color:var(--red)">10% ⚠</span><span class="gauge-marker" style="color:var(--amber)">25% ⚠</span><span class="gauge-marker">50%</span><span class="gauge-marker">100%</span></div>
+        <div class="gauge-meta" id="gauge-meta">Loading fuel data...</div>
+      </div>
+      <div class="gauge-vitals">
+        <div class="gv-item"><div class="gv-num" id="gv-litres" style="color:var(--fuel)">—</div><div class="gv-lbl">Litres left</div></div>
+        <div class="gv-item"><div class="gv-num" id="gv-runtime" style="color:var(--g1)">—</div><div class="gv-lbl">Est. runtime</div></div>
+        <div class="gv-item"><div class="gv-num" id="gv-burnrate" style="color:var(--mid)">—</div><div class="gv-lbl">L / hour</div></div>
+        <div class="gv-item"><div class="gv-num" id="gv-cost" style="color:var(--red)">—</div><div class="gv-lbl">Daily cost</div></div>
+      </div>
+    </div>
+
+    <!-- PRICE TICKER -->
+    <div class="price-ticker">
+      <span class="pt-label">Current diesel price:</span>
+      <span class="pt-price" id="pt-price">₦750/L</span>
+      <span class="pt-source" id="pt-source">· Manual rate (NNPC est.)</span>
+      <span class="pt-status"><span class="pt-dot loading" id="pt-dot"></span><span id="pt-status-txt">Fetching live price...</span></span>
+      <div class="pt-manual">
+        <input type="number" id="pt-manual-input" placeholder="Enter price/L" min="100" max="5000">
+        <button onclick="setManualPrice()">Update</button>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+      <!-- LEFT COL -->
+      <div class="left-col">
+
+        <!-- REFUEL FORM -->
+        <div class="refuel-card">
+          <div class="rc-head">
+            <div class="rc-icon">⛽</div>
+            <div><div class="rc-title">Log a Refuel</div><div class="rc-sub">Fill in what you added — PULSE validates and updates the gauge automatically</div></div>
+          </div>
+          <div class="rc-body">
+            <div class="form-grid">
+              <div>
+                <div class="f-label">Litres added <span class="f-hint">Max: <span id="max-litres-hint">200L</span></span></div>
+                <input class="f-input" id="f-litres" type="number" min="1" max="10000" step="0.5" placeholder="e.g. 100" oninput="onFormChange()">
+                <div class="f-err" id="err-litres"></div>
+              </div>
+              <div>
+                <div class="f-label">Total cost paid (₦) <span class="f-hint">Auto-fills from price</span></div>
+                <input class="f-input" id="f-cost" type="number" min="0" placeholder="e.g. 75000" oninput="onFormChange()">
+                <div class="f-err" id="err-cost"></div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div>
+                <div class="f-label">Supplier / vendor</div>
+                <input class="f-input" id="f-supplier" type="text" placeholder="e.g. NNPC filling station" oninput="onFormChange()">
+              </div>
+              <div>
+                <div class="f-label">Fuel type</div>
+                <select class="f-select" id="f-fueltype">
+                  <option>Diesel (AGO)</option>
+                  <option>Petrol (PMS)</option>
+                  <option>LPG / Gas</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-full">
+              <div class="f-label">Fuel level BEFORE this refuel (%) <span class="f-hint">Be honest — PULSE checks plausibility</span></div>
+              <input class="f-input" id="f-before" type="number" min="0" max="100" placeholder="e.g. 15" oninput="onFormChange()">
+              <div class="f-err" id="err-before"></div>
+            </div>
+            <div class="form-full">
+              <div class="f-label">Notes (optional)</div>
+              <input class="f-input" id="f-notes" type="text" placeholder="e.g. Emergency refuel during delivery, supplier was late">
+            </div>
+
+            <!-- Cost preview -->
+            <div class="cost-preview" id="cost-preview" style="display:none">
+              <span class="cp-label">Calculated cost at ₦<span id="cp-price-rate">750</span>/L</span>
+              <span class="cp-val" id="cp-val">₦0</span>
+            </div>
+
+            <!-- Validation panel -->
+            <div class="validation-panel" id="validation-panel">
+              <div class="vp-head" id="vp-head">Checking entry...</div>
+              <div class="vp-items" id="vp-items"></div>
+            </div>
+
+            <button class="submit-btn" id="submit-btn" onclick="submitRefuel()" disabled>
+              <span id="submit-icon">⛽</span>
+              <span id="submit-label">Log Refuel</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CONSUMPTION CHART -->
+        <div class="sc">
+          <div class="sc-hd"><div class="sc-title">30-Day Fuel Consumption</div><div class="sc-sub">Litres consumed per day based on logged refuels and NEPA uptime</div></div>
+          <div class="sc-bd" style="padding:14px">
+            <div class="chart-wrap"><canvas id="chart-canvas" class="chart-canvas"></canvas><div class="chart-empty" id="chart-empty" style="display:none">Log your first refuel to see consumption data</div></div>
+          </div>
+        </div>
+
+        <!-- REFUEL HISTORY -->
+        <div class="sc">
+          <div class="sc-hd" style="display:flex;justify-content:space-between;align-items:center">
+            <div><div class="sc-title">Refuel History</div><div class="sc-sub" id="history-sub">Loading...</div></div>
+            <span id="fraud-badge" style="display:none;font-size:10px;font-weight:700;color:var(--red);background:rgba(232,65,90,.1);border:1px solid rgba(232,65,90,.2);border-radius:6px;padding:3px 10px">⚠ Flags detected</span>
+          </div>
+          <div id="history-list"><div style="text-align:center;padding:24px;font-size:13px;color:var(--dim)">No refuels logged yet. Log your first refuel above.</div></div>
+        </div>
+
+      </div><!-- /left-col -->
+
+      <!-- RIGHT COL -->
+      <div class="right-col">
+
+        <!-- THIS MONTH STATS -->
+        <div class="sc">
+          <div class="sc-hd"><div class="sc-title">This Month</div></div>
+          <div class="sc-bd">
+            <div class="stat-row"><span class="sr-label">Total refuels</span><span class="sr-val fuel" id="stat-refuels">0</span></div>
+            <div class="stat-row"><span class="sr-label">Litres purchased</span><span class="sr-val fuel" id="stat-litres">0L</span></div>
+            <div class="stat-row"><span class="sr-label">Total diesel cost</span><span class="sr-val red" id="stat-cost">₦0</span></div>
+            <div class="stat-row"><span class="sr-label">Cost per litre (avg)</span><span class="sr-val amber" id="stat-ppl">—</span></div>
+            <div class="stat-row"><span class="sr-label">Daily avg. consumption</span><span class="sr-val" id="stat-daily">—</span></div>
+            <div class="stat-row"><span class="sr-label">NEPA hours saved</span><span class="sr-val green" id="stat-nepa">—</span></div>
+          </div>
+        </div>
+
+        <!-- ANOMALY DETECTION -->
+        <div class="sc">
+          <div class="sc-hd"><div class="sc-title">Integrity Checks</div><div class="sc-sub">PULSE validates every entry against your generator specs</div></div>
+          <div class="sc-bd" style="padding:14px">
+            <div id="anomaly-list"><div class="no-anomaly">✓ No anomalies detected</div></div>
+          </div>
+        </div>
+
+        <!-- RECALIBRATE -->
+        <div class="sc">
+          <div class="sc-hd"><div class="sc-title">Manual Recalibration</div><div class="sc-sub">Correct the gauge if you physically checked the tank</div></div>
+          <div class="sc-bd">
+            <div class="recal-form">
+              <div style="font-size:11px;color:var(--mid);line-height:1.6;margin-bottom:4px">If someone physically measured the tank and the gauge is wrong, enter the correct percentage here. PULSE will log this as a calibration event.</div>
+              <input class="recal-input" id="recal-input" type="number" min="0" max="100" placeholder="Actual fuel %" oninput="onRecalChange()">
+              <div style="font-size:12px;color:var(--mid);text-align:center" id="recal-preview"></div>
+              <button class="recal-btn" id="recal-btn" onclick="submitRecalibration()" disabled>Recalibrate gauge</button>
+              <div class="recal-hint">This does not affect your refuel history. All calibration events are logged separately for transparency.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECTIONS -->
+        <div class="sc">
+          <div class="sc-hd"><div class="sc-title">Fuel Projections</div></div>
+          <div class="sc-bd">
+            <div class="stat-row"><span class="sr-label">Next 25% warning</span><span class="sr-val amber" id="proj-warn">—</span></div>
+            <div class="stat-row"><span class="sr-label">Critical 10% level</span><span class="sr-val red" id="proj-crit">—</span></div>
+            <div class="stat-row"><span class="sr-label">Empty (est.)</span><span class="sr-val" id="proj-empty">—</span></div>
+            <div class="stat-row"><span class="sr-label">Suggested reorder date</span><span class="sr-val green" id="proj-order">—</span></div>
+            <div class="stat-row"><span class="sr-label">Monthly cost at current rate</span><span class="sr-val red" id="proj-monthly">—</span></div>
+          </div>
+        </div>
+
+      </div><!-- /right-col -->
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<script src="../js/pulse-fuel.js" type="module"></script>
+</body>
+</html>
