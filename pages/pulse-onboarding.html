@@ -3,11 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PULSE — Create Your Clinic Account</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>PULSE - Create Your Clinic Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/global.css">
 <link rel="stylesheet" href="../styles/pulse-onboarding.css">
 </head>
 <body>
+
+<!-- AMBIENT -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast">
@@ -44,10 +49,35 @@
 
   <!-- Header -->
   <div class="page-header">
-    <div class="page-tag"><div class="tag-dot"></div>Create Account</div>
+    <div class="page-tag"><div class="tag-dot"></div>Fast Clinic Setup</div>
     <h1 class="page-title">Set up your<br><span>clinic profile</span></h1>
-    <p class="page-sub">Register your facility in under 5 minutes. PULSE will configure your energy intelligence baseline before your first session.</p>
+    <p class="page-sub">Register the essentials first. PULSE builds the clinic power baseline while you keep moving.</p>
   </div>
+
+  <div class="onboarding-layout">
+    <aside class="readiness-panel" aria-label="PULSE setup preview">
+      <div class="readiness-kicker">Energy baseline</div>
+      <div class="readiness-title">Your clinic command center starts here.</div>
+      <p class="readiness-copy">A short setup creates the facility profile, generator baseline, priority equipment map, and emergency load plan.</p>
+      <div class="readiness-metrics">
+        <div><strong>4</strong><span>setup steps</span></div>
+        <div><strong>&lt;5m</strong><span>target time</span></div>
+        <div><strong>24/7</strong><span>monitoring</span></div>
+      </div>
+      <div class="power-card">
+        <div class="power-card-top">
+          <span>Clinic readiness</span>
+          <strong>72%</strong>
+        </div>
+        <div class="power-meter"><span></span></div>
+        <div class="power-grid">
+          <div><span></span> Critical load</div>
+          <div><span></span> Generator profile</div>
+          <div><span></span> Appliance triage</div>
+        </div>
+      </div>
+    </aside>
+    <main class="onboarding-main">
 
   <!-- ════════════════ SIGNUP SECTION ════════════════ -->
   <div id="signup-section">
@@ -138,7 +168,7 @@
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn-primary" onclick="goStep(2)">Continue — Facility Details</button>
+          <button class="btn-primary" onclick="goStep(2)">Continue - Facility Details</button>
         </div>
         <div class="form-footer">
           Already have an account? <a href="login.html">Sign in here</a>
@@ -220,7 +250,7 @@
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn-primary" onclick="goStep(3)">Continue — Power Setup</button>
+          <button class="btn-primary" onclick="goStep(3)">Continue - Power Setup</button>
           <button class="btn-secondary" onclick="goStep(1)">Back</button>
         </div>
       </div>
@@ -296,15 +326,15 @@
           <div class="form-group">
             <label class="field-label">Smart switches installed?</label>
             <div class="radio-group" id="switch-group">
-              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="Yes"><div class="r-dot"></div>Yes — already installed</label>
-              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="No"><div class="r-dot"></div>No — manual control only</label>
+              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="Yes"><div class="r-dot"></div>Yes - already installed</label>
+              <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="No"><div class="r-dot"></div>No - manual control only</label>
               <label class="radio-pill" onclick="selectRadio(this,'switch-group')"><input type="radio" name="switches" value="Planned"><div class="r-dot"></div>Planning to install</label>
             </div>
             <div class="field-hint">Smart switches allow PULSE to automatically cut non-critical loads during a crisis.</div>
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn-primary" onclick="goStep(4)">Continue — Review &amp; Confirm</button>
+          <button class="btn-primary" onclick="goStep(4)">Continue - Review &amp; Confirm</button>
           <button class="btn-secondary" onclick="goStep(2)">Back</button>
         </div>
       </div>
@@ -342,10 +372,10 @@
     <div class="sb-line"></div>
     <div class="sb-badge">
       <div class="sb-icon">A</div>
-      Step 2 of 2 — Appliance Registration
+      Step 2 of 2 - Appliance Registration
     </div>
     <h2>Register your appliances</h2>
-    <p>Tell PULSE every device in your clinic. The AI will analyse each one, calculate its power draw, assign a priority level, and build your complete energy baseline — all automatically.</p>
+    <p>Tell PULSE every device in your clinic. The AI will analyse each one, calculate its power draw, assign a priority level, and build your complete energy baseline automatically.</p>
   </div>
 
 
@@ -388,7 +418,7 @@
       <div class="form-card-header">
         <div class="fch-label">Appliance Registration</div>
         <div class="form-card-title">Add your clinic's equipment</div>
-        <div class="form-card-sub">Add each appliance, piece of medical equipment, or electrical device. Include model numbers where possible — PULSE will look up the exact power specifications.</div>
+        <div class="form-card-sub">Add each appliance, piece of medical equipment, or electrical device. Include model numbers where possible; PULSE will look up the exact power specifications.</div>
       </div>
       <div class="form-card-body">
 
@@ -409,7 +439,7 @@
           </div>
           <div class="form-row c2">
             <div class="form-group">
-              <label class="field-label">Wattage (W) — if known</label>
+              <label class="field-label">Wattage (W) - if known</label>
               <input type="number" id="a-watts" placeholder="e.g. 300" min="1">
               <div class="field-hint">Leave blank if you have the model number above.</div>
             </div>
@@ -577,7 +607,7 @@
           <div class="ai-hdr">
             <div class="ai-mark"><div class="ai-mark-dot"></div></div>
             <div>
-              <div class="ai-title">PULSE AI — Energy Profile Analysis</div>
+              <div class="ai-title">PULSE AI - Energy Profile Analysis</div>
               <div class="ai-sub">Processing appliance specifications</div>
             </div>
           </div>
@@ -636,7 +666,7 @@
           Based on your generator capacity and this appliance profile, PULSE estimates your clinic can run critical equipment for approximately <strong style="color:var(--g1)">4.8 hours</strong> on a full tank in emergency mode. Adding smart switches will allow PULSE to act automatically when fuel drops below threshold.
         </div>
         <div class="btn-row">
-          <button class="btn-primary" onclick="finishSetup()">Complete Setup — Go to Dashboard</button>
+          <button class="btn-primary" onclick="finishSetup()">Complete Setup - Go to Dashboard</button>
           <button class="btn-secondary" onclick="goAppStep(1)">Edit Appliances</button>
         </div>
       </div>
@@ -660,6 +690,9 @@
     </div>
 
   </div><!-- /appliance-section -->
+
+    </main>
+  </div>
 
 </div><!-- /page-center -->
 </div><!-- /page-shell -->

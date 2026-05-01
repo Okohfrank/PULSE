@@ -1,17 +1,13 @@
+/* ── FUEL MANAGER PAGE ──────────────────────────────────────
+   Base tokens, reset, body, and grid texture
+   are provided by global.css (loaded first).
+   Page-specific fuel color aliases kept below.
+─────────────────────────────────────────────────────────── */
 :root {
-  --bg:      #020d08; --surface: #06110d; --card: #081410; --card2: #0b1c15;
-  --border:  rgba(0,200,100,0.1); --border2: rgba(0,200,100,0.22);
-  --g1:      #00e87a; --g2: #00c96a; --g3: #009d52; --g-dim: rgba(0,232,122,0.06);
-  --teal:    #00d4b8; --amber: #f0a500; --red: #e8415a; --blue: #4d8fff;
-  --white:   #edfff6; --off: #c8e8d8; --mid: #6a9e82; --dim: #2e5040; --muted: #1a2e24;
-  --fuel:    #f59e0b; --fuel2: rgba(245,158,11,0.08); --fuel3: rgba(245,158,11,0.18);
-  --sw: 240px; --th: 64px; --r: 10px; --r2: 16px; --r3: 22px;
-  --ease: cubic-bezier(0.4,0,0.2,1); --t: 0.22s;
+  --fuel:  #f59e0b;
+  --fuel2: rgba(245,158,11,0.08);
+  --fuel3: rgba(245,158,11,0.18);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{overflow-x:hidden}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,200,100,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,100,0.015) 1px,transparent 1px);background-size:44px 44px}
 
 /* ── LAYOUT ── */
 .app-shell{display:flex;min-height:100vh;position:relative;z-index:1}
@@ -234,3 +230,76 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 @media(max-width:860px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0);box-shadow:0 0 60px rgba(0,0,0,.6)}.sb-overlay.open{display:block}.main-area{margin-left:0!important;max-width:100vw}.menu-btn{display:flex}.tb-clock{display:none}.fh-stats{display:flex;flex-wrap:wrap;gap:8px}.gauge-vitals{display:flex;flex-wrap:wrap;gap:8px}}
 @media(max-width:760px){.page-content{flex-direction:column}.right-col{width:100%}.form-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.topbar{padding:0 12px;gap:8px}.tb-t1{font-size:14px}.tb-t2{display:none}.page-content{padding:14px}.gauge-strip{padding:14px}.rc-body{padding:16px}.fuel-hero{padding:16px}}
+
+/* Clinical light override: keeps page-specific layout, removes dark-room styling. */
+body {
+  background: radial-gradient(circle at 16% 8%, rgba(210,255,226,0.92), transparent 28rem), linear-gradient(180deg, #fbfffd 0%, #effcf4 100%) !important;
+  color: #07351f !important;
+}
+body::before {
+  opacity: 0.22 !important;
+  background-image: linear-gradient(rgba(8,122,66,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(8,122,66,0.035) 1px, transparent 1px) !important;
+}
+.page-tag,
+.hero-badge,
+.section-label,
+.readiness-kicker,
+.sb-badge,
+.offline-badge,
+.ai-banner-label,
+.fh-label,
+.lang-badge,
+.chemxai-badge,
+.tag-dot,
+.badge-dot,
+.ob-dot,
+.ltag-dot {
+  display: none !important;
+}
+.card,
+.form-card,
+.panel,
+.widget,
+.metric-card,
+.main-card,
+.ai-banner,
+.sidebar,
+.topbar,
+.page-card,
+.stat-card,
+.control-card,
+.chat-card,
+.context-card,
+.fuel-card,
+.solar-card,
+.crisis-card,
+.pricing-card,
+.app-item,
+.inline-form,
+.modal,
+.gauge-card,
+.vitals-row {
+  background-color: rgba(255,255,255,0.86) !important;
+  border-color: rgba(8,122,66,0.12) !important;
+  box-shadow: 0 18px 52px rgba(13,74,42,0.09) !important;
+}
+[class*="title"],
+[class*="heading"],
+h1,h2,h3 {
+  color: #07351f;
+}
+[class*="sub"],
+[class*="label"],
+[class*="meta"],
+p {
+  color: #5f7f6f;
+}
+.btn-primary,
+.primary-btn,
+.submit-btn,
+.action-primary,
+button[type="submit"] {
+  background: linear-gradient(135deg, #8ff2b8, #16c76a) !important;
+  color: #06341e !important;
+  box-shadow: 0 14px 34px rgba(22,199,106,0.18) !important;
+}

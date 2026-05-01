@@ -598,7 +598,7 @@ try {
 const uid = auth.currentUser?.uid;
 if (!uid) {
 // Not logged in — go back to login
-setTimeout(() => { window.location.href = 'pulse_login.html'; }, 1500);
+setTimeout(() => { window.location.href = 'login.html'; }, 1500);
 return;
 }
 
@@ -619,14 +619,14 @@ savedAt: Date.now(),
 
 // Navigate to dashboard after short delay so the success screen is visible
 setTimeout(() => {
-window.location.href = 'pulse_dashboard.html';
+window.location.href = 'pulse-dashboard.html';
 }, 2000);
 
 } catch (err) {
 console.error('Error saving appliances:', err.message);
 // Still navigate even if save fails — data can be re-entered in Settings
 setTimeout(() => {
-window.location.href = 'pulse_dashboard.html';
+window.location.href = 'pulse-dashboard.html';
 }, 2000);
 }
 };
