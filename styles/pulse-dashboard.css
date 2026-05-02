@@ -1,69 +1,14 @@
 /* ─────────────────────────────────────────────
-   TOKENS
+   DASHBOARD
+   Base tokens, reset, body, and grid texture
+   are provided by global.css (loaded first).
 ───────────────────────────────────────────── */
-:root {
-  --bg:        #020d08;
-  --bg2:       #040f0a;
-  --surface:   #06110d;
-  --card:      #081410;
-  --card2:     #0b1c15;
-  --card3:     #0e2219;
-  --border:    rgba(0,200,100,0.1);
-  --border2:   rgba(0,200,100,0.2);
-  --border3:   rgba(0,200,100,0.38);
-  --g1:        #00e87a;
-  --g2:        #00c96a;
-  --g3:        #009d52;
-  --g4:        #006633;
-  --g-glow:    rgba(0,232,122,0.12);
-  --teal:      #00d4b8;
-  --amber:     #f0a500;
-  --amber2:    rgba(240,165,0,0.12);
-  --red:       #e8415a;
-  --red2:      rgba(232,65,90,0.12);
-  --blue:      #4d8fff;
-  --blue2:     rgba(77,143,255,0.1);
-  --white:     #edfff6;
-  --off:       #c8e8d8;
-  --mid:       #6a9e82;
-  --dim:       #2e5040;
-  --muted:     #1a2e24;
-  --sidebar-w: 240px;
-  --topbar-h:  64px;
-  --r:         10px;
-  --r2:        16px;
-  --r3:        22px;
-  --ease:      cubic-bezier(0.4,0,0.2,1);
-  --t:         0.25s;
-}
-
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { overflow-x:hidden; scroll-behavior:smooth; max-width:100vw; }
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--white);
-  min-height: 100vh;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
-}
 
 /* Prevent horizontal overflow from any grid or flex child */
 .app-shell, .main-area, .dash-content,
 .vitals-grid, .bottom-grid, .ecg-card,
 .ward-card, .events-card, .fuel-timeline-card,
 .ai-banner, .nepa-banner, .topbar { max-width:100%; min-width:0; }
-
-/* Grid texture */
-body::before {
-  content: ''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background-image:
-    linear-gradient(rgba(0,200,100,0.018) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,200,100,0.018) 1px,transparent 1px);
-  background-size: 44px 44px;
-}
 
 /* ─────────────────────────────────────────────
    LAYOUT SHELL
@@ -673,22 +618,7 @@ canvas#ecgCanvas { display:block; width:100%; height:100%; }
 .nepa-banner.offline .nepa-toggle-btn:hover { background:rgba(232,65,90,0.2); }
 .nepa-banner.online  .nepa-toggle-btn { border-color:rgba(0,232,122,0.25); color:var(--g1); background:var(--g-glow); }
 
-/* ─────────────────────────────────────────────
-   TOAST
-───────────────────────────────────────────── */
-.toast {
-  position:fixed; bottom:24px; right:24px; z-index:600;
-  background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2);
-  padding:12px 18px; font-size:12px; color:var(--white);
-  box-shadow:0 14px 40px rgba(0,0,0,0.5);
-  transform:translateY(80px); opacity:0; transition:all 0.4s var(--ease);
-  max-width:280px; display:flex; align-items:center; gap:9px;
-}
-.toast.show { transform:translateY(0); opacity:1; }
-.toast-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.toast.success .toast-dot { background:var(--g1); }
-.toast.warning .toast-dot { background:var(--amber); }
-.toast.error   .toast-dot { background:var(--red); }
+/* Toast styles are in global.css */
 
 
 /* ─────────────────────────────────────────────
@@ -848,4 +778,77 @@ canvas#ecgCanvas { display:block; width:100%; height:100%; }
   .greeting-name { font-size:12px; }
   .greeting-top { font-size:10px; }
   .ecg-stat { flex:1 1 calc(50% - 5px); }
+}
+
+/* Clinical light override: keeps page-specific layout, removes dark-room styling. */
+body {
+  background: radial-gradient(circle at 16% 8%, rgba(210,255,226,0.92), transparent 28rem), linear-gradient(180deg, #fbfffd 0%, #effcf4 100%) !important;
+  color: #07351f !important;
+}
+body::before {
+  opacity: 0.22 !important;
+  background-image: linear-gradient(rgba(8,122,66,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(8,122,66,0.035) 1px, transparent 1px) !important;
+}
+.page-tag,
+.hero-badge,
+.section-label,
+.readiness-kicker,
+.sb-badge,
+.offline-badge,
+.ai-banner-label,
+.fh-label,
+.lang-badge,
+.chemxai-badge,
+.tag-dot,
+.badge-dot,
+.ob-dot,
+.ltag-dot {
+  display: none !important;
+}
+.card,
+.form-card,
+.panel,
+.widget,
+.metric-card,
+.main-card,
+.ai-banner,
+.sidebar,
+.topbar,
+.page-card,
+.stat-card,
+.control-card,
+.chat-card,
+.context-card,
+.fuel-card,
+.solar-card,
+.crisis-card,
+.pricing-card,
+.app-item,
+.inline-form,
+.modal,
+.gauge-card,
+.vitals-row {
+  background-color: rgba(255,255,255,0.86) !important;
+  border-color: rgba(8,122,66,0.12) !important;
+  box-shadow: 0 18px 52px rgba(13,74,42,0.09) !important;
+}
+[class*="title"],
+[class*="heading"],
+h1,h2,h3 {
+  color: #07351f;
+}
+[class*="sub"],
+[class*="label"],
+[class*="meta"],
+p {
+  color: #5f7f6f;
+}
+.btn-primary,
+.primary-btn,
+.submit-btn,
+.action-primary,
+button[type="submit"] {
+  background: linear-gradient(135deg, #8ff2b8, #16c76a) !important;
+  color: #06341e !important;
+  box-shadow: 0 14px 34px rgba(22,199,106,0.18) !important;
 }
