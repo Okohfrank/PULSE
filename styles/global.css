@@ -135,7 +135,7 @@
   /* ── Typography ── */
   --font-display: 'Awesome', 'Inter', Arial, sans-serif;
   --font-body:    'Inter', Arial, sans-serif;
-  --font-mono:    'JetBrains Mono', 'DM Mono', monospace;
+  --font-mono:    'Inter', 'Ariel', sans-serif;
   /* Legacy */
   --font-h:  var(--font-display);
   --font-b:  var(--font-body);
